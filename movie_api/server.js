@@ -29,5 +29,5 @@ http.createServer((request, response) => {
     response.writeHead(200, { 'Content-Type': 'text/html' });
     response.write(data);
     response.end();
-
-}).listen(8080, function(){ alert('Server listening on 8080...')});
+  })
+}).listen(8080, function(){ console.log('Server listening on 8080...')});
