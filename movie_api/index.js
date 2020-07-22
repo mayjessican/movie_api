@@ -105,11 +105,11 @@ app.get('/movies/:title', (req, res) => {
 //   res.json(movies.find((movie) =>
 //     {return movie.genre === req.params.genre}));
 // });
-app.get('/movies/:genre', (req, res) => {
+app.get('/genre/', (req, res) => {
   console.log('Endpoint hit!!!!!!');
   console.log('Genre: ', req.params.genre);
   const results = movies.find((movie) =>
-    {return movie.genre === req.params.genre});
+    {return movie.genre === req.params.name});
   console.log(results);
   res.json(results);
 });
@@ -120,9 +120,9 @@ app.get('/movies', (req, res) => {
 });
 
 // Gets the data about a movie director
-app.get('/movies/:director', (req, res) => {
-  res.json(movies.find((movies) =>
-    {return movies.director === req.params.director}));
+app.get('/directors/:name', (req, res) => {
+  res.json(movies.find((movie) =>
+    {return movie.director === req.params.name}));
 });
 
 let users = []

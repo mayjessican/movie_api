@@ -10,6 +10,89 @@
   <h1>Documentation</h1>
   <P>My Flix is a web application that provides users with the ability to search and save different information about movies!
     They will be able to sign-up, update their personal information as well as creat a list of their own favourite movies!
+    <tr>
+      <td scope="row">Return a list of All movies to the user </td>
+      <td> /movies</td>
+      <td style="color: Blue">GET </td>
+      <td> A JSON object holding data about all movies</td>
+    </tr>
+    <tr>
+      <td scope="row">Return data (description, genre, director) about a single movie by title to the user…</td>
+      <td> /movies/[Title] </td>
+      <td style="color: Blue"> GET </td>
+      <td> A JSON object holding data about a single movie, containing an ID, title, and some other properties.
+      </td>
+    </tr>
+    <tr>
+      <td scope="row">Return data about a genres (description) by movie title.</td>
+      <td> movies/genre/:name</td>
+      <td style="color: Blue"> GET </td>
+      <td> A JSON object holding data about a genre (description) by name or title.</td>
+    </tr>
+    <tr>
+      <td scope="row">Return data about a director by name </td>
+      <td> /movies/director/:name</td>
+      <td style="color: Blue"> GET </td>
+      <td> None</td>
+      <td>A JSON object holding data about a single director, containing name, birth year, death year, movies. Example:
+        <td style="color: Blue"> GET </td>
+      </td>
+    </tr>
+    <tr>
+      <td scope="row">Allow new users to register</td>
+      <td>/users</td>
+      <td style="color: Blue"> POST </td>
+      <td> A JSON object holding data about the new user to register/add, structured like:
+        <p style="color: Blue">
+          {<br>
+            "name" : "Jessica May",<br>
+            "email" : "jnm@gmail.com",<br>
+            "password" : "careerfoundry",
+            }
+      </td>
+      <td> A JSON object holding data about the new user to register plus ID, structured like:
+        <p style="color:Blue">
+          { <br>
+            {<br>
+              "name": "Jessica May", <br>
+              "email": "jnm@gmail.com", <br>
+              "password": "careerfoundry", <br>
+              "id": "61b3a96e-1f2c-4182-98d6-e4405f807b1b"
+            }
+          }</td>
+    </tr>
+    <tr>
+      <td scope="row">Allow users to update their user info (username, password, email, date of birth) </td>
+      <td> /users/:name]</td>
+      <td style="color: Blue"> PUT </td>
+      <td>A JSON object holding data about the current user to update, structured like:
+      </td>
+      <td>A text message indicating whether the user's account has succesfully changed.
+</td>
+    </tr>
+    <tr>
+      <td scope="row"> Allow users to add a movie to their list of favorites</td>
+      <td> /users/:name/movies/:movie_id</td>
+      <td style="color: Blue"> POST </td>
+      <td> A JSON object holding data about the movie to add to the user's list of favorite movies, structured like:
+        <p style="color: Blue">
+        <td> A text message indicating whether the user's favorite movie was succesfully added to their list.</td>
+    </tr>
+    <tr>
+      <td scope="row"> Allow users to remove a movie to their list of favorites</td>
+      <td> /users/:name/movies/:movie_id</td>
+      <td style="color: Blue"> DELETE </td>
+      <td> None</td>
+      <td> A text message indicating whether the movie was succesfully removed from the users' favorite-list.</td>
+    </tr>
+    <tr>
+      <td scope="row"> Allow existing users to deregister (remove a user by name or id) </td>
+      <td> /users/:name/</td>
+      <td style="color: Blue"> DELETE </td>
+      <td> None</td>
+      <td> A text message indicating whether the user's account was succesfully removed.</td>
+    </tr>
+
   </p>
 </div>
 </body>
