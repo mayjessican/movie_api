@@ -84,11 +84,6 @@ app.get('/documentation', (req, res) => {
   res.sendFile('public/documentation.html', { root: __dirname });
 });
 
-// Gets the list of data about ALL movies
-app.get('/movies', (req, res) => {
-  res.json(movies);
-});
-
 // Gets the data about a movie title
 app.get('/movies/:title', (req, res) => {
   res.json(movies.find((movies) =>
@@ -104,11 +99,24 @@ app.get('/movies/:title', (req, res) => {
  // console.log(filteredMovies);
 
  // Gets the data about a movie genre
+// app.get('/movies/:genre', (req, res) => {
+//   console.log('req:', req)
+//   console.log('res', res)
+//   res.json(movies.find((movie) =>
+//     {return movie.genre === req.params.genre}));
+// });
 app.get('/movies/:genre', (req, res) => {
-  console.log('req:', req)
-  console.log('res', res)
-  res.json(movies.find((movie) =>
-    {return movie.genre === req.params.genre}));
+  console.log('Endpoint hit!!!!!!');
+  console.log('Genre: ', req.params.genre);
+  const results = movies.find((movie) =>
+    {return movie.genre === req.params.genre});
+  console.log(results);
+  res.json(results);
+});
+
+// Gets the list of data about ALL movies
+app.get('/movies', (req, res) => {
+  res.json(movies);
 });
 
 // Gets the data about a movie director
