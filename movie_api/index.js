@@ -10,6 +10,8 @@ app.use(morgan("common"));
 app.use(bodyParser.json());
 
 let favourite = [];
+// let genre = [];
+// let director = [];
 
 let movies = [
   {id: 9,
@@ -94,9 +96,19 @@ app.get('/movies/:title', (req, res) => {
 });
 
 // Gets the data about a movie genre
+// const filteredMovies = movies.filter(movies => movies.genre === req.params.genre)
+ // app.get('/movies/:genre', (req, res) => {
+ //   res.json(movies.filter((movies) =>
+ //     {return movie.genre === req.params.genre}));
+ // });
+ // console.log(filteredMovies);
+
+ // Gets the data about a movie genre
 app.get('/movies/:genre', (req, res) => {
-  res.json(movies.find((movies) =>
-    {return movies.genre === req.params.genre}));
+  console.log('req:', req)
+  console.log('res', res)
+  res.json(movies.find((movie) =>
+    {return movie.genre === req.params.genre}));
 });
 
 // Gets the data about a movie director
@@ -160,7 +172,8 @@ app.delete('/users/:name/movies/:movie_id', (req, res) => {
   let movie_id = req.params.movie_id;
   let userName = req.params.name;
   if (userName) {
-    favourite = favourite.delete(movie_id);
+    // favourite = favourite.delete(movie_id);
+    movies = movies.delete((movie_id) => { return movie_id !== req.params.id });
     res.status(200).send('Movie ' + req.params.movie_id + ' was deleted.');
   } else {
     res.status(404).send('Movie ' + req.params.movie_id + ' was not found.')
