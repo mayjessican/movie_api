@@ -10,8 +10,6 @@ app.use(morgan("common"));
 app.use(bodyParser.json());
 
 let favourite = [];
-// let genre = [];
-// let director = [];
 
 let movies = [
   {id: 9,
@@ -90,7 +88,8 @@ app.get('/movies/:title', (req, res) => {
     {return movies.title === req.params.title}));
 });
 
-app.get('/genre/', (req, res) => {
+// Get the genre about a movie
+app.get('/genres/:name', (req, res) => {
   const results = movies.find((movie) =>
     {return movie.genre === req.params.name});
   res.json(results);
@@ -137,8 +136,6 @@ app.put('/users/:id', (req, res) => {
 // Deletes a user from our list by ID
 app.delete('/users/:id', (req, res) => {
   let user_id = req.params.id;
-  // users.find((user_id) => { remove user.id === req.params.id });
-  // if (user) {
      users = users.filter((user_id) => { return user_id !== req.params.id });
      res.status(200).send('User ' + req.params.id + ' was deleted.');
   // }
@@ -161,13 +158,12 @@ app.delete('/users/:name/movies/:movie_id', (req, res) => {
   let movie_id = req.params.movie_id;
   let userName = req.params.name;
   if (userName) {
-    // favourite = favourite.delete(movie_id);
-    movies = movies.delete((movie_id) => { return movie_id !== req.params.id });
+    delete favourite[favourite.indexOf(movie_id)]
     res.status(200).send('Movie ' + req.params.movie_id + ' was deleted.');
   } else {
     res.status(404).send('Movie ' + req.params.movie_id + ' was not found.')
   }
-  });
+});
 
 // listen for requests
 app.listen(8080, function(){ console.log('Server listening on 8080...')});
