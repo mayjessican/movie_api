@@ -90,27 +90,9 @@ app.get('/movies/:title', (req, res) => {
     {return movies.title === req.params.title}));
 });
 
-// Gets the data about a movie genre
-// const filteredMovies = movies.filter(movies => movies.genre === req.params.genre)
- // app.get('/movies/:genre', (req, res) => {
- //   res.json(movies.filter((movies) =>
- //     {return movie.genre === req.params.genre}));
- // });
- // console.log(filteredMovies);
-
- // Gets the data about a movie genre
-// app.get('/movies/:genre', (req, res) => {
-//   console.log('req:', req)
-//   console.log('res', res)
-//   res.json(movies.find((movie) =>
-//     {return movie.genre === req.params.genre}));
-// });
 app.get('/genre/', (req, res) => {
-  console.log('Endpoint hit!!!!!!');
-  console.log('Genre: ', req.params.genre);
   const results = movies.find((movie) =>
     {return movie.genre === req.params.name});
-  console.log(results);
   res.json(results);
 });
 
@@ -135,7 +117,6 @@ app.get('/users', (req, res) => {
 // Adds data for a new users
 app.post('/users', (req, res) => {
   let newUser = req.body;
-  console.log(newUser);
   if(!newUser.name){
     const message = 'Missing name in request body';
     res.status(400).send (message);
