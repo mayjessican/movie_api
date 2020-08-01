@@ -59,15 +59,10 @@ app.get('/movies/:title', (req, res) => {
 });
 
 // Get the genre about a movie
-// app.get('/genres/:name', (req, res) => {
-//   const results = movies.find((movie) =>
-//     {return movie.genre === req.params.name});
-//   res.json(results);
-// });
 app.get('/genres/:name', (req, res) => {
-  Users.findOne({ Genre: req.params.name })
+  Movies.findOne({ "Genre.Name": req.params.name })
     .then((movie) => {
-      res.json(movie);
+      return res.json(movie);
     })
     .catch((err) => {
       console.error(err);
@@ -76,14 +71,10 @@ app.get('/genres/:name', (req, res) => {
 });
 
 // Gets the data about a movie director
-// app.get('/directors/:name', (req, res) => {
-//   res.json(movies.find((movie) =>
-//     {return movie.director === req.params.name}));
-// });
 app.get('/director/:name', (req, res) => {
-  Movies.findOne({ Director: req.params.name })
+  Movies.findOne({ "Director.Name": req.params.name })
     .then((movies) => {
-      res.json(
+      return res.json(
         "Name: " + movies.Director.Name +
         "Bio: " + movies.Director.Bio +
         "Birthday: " + movies.Director.Birthday
@@ -209,9 +200,9 @@ app.delete('/users/:Username', (req, res) => {
 });
 
 // Add a movie to a user's list of favorites
-app.post('/users/:Username/Movies/:MovieID', (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username }, {
-     $push: { FavoriteMovies: req.params.MovieID }
+app.post('/users/:name/movies/:movie_id', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.name }, {
+     $push: { FavouriteMovies: req.params.movie_id }
    },
    { new: true }, // This line makes sure that the updated document is returned
   (err, updatedUser) => {
@@ -219,7 +210,7 @@ app.post('/users/:Username/Movies/:MovieID', (req, res) => {
       console.error(err);
       res.status(500).send('Error: ' + err);
     } else {
-      res.json(updatedUser);
+    res.json(updatedUser);
     }
   });
 });
