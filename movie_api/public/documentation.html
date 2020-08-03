@@ -18,6 +18,7 @@
         <th>URL</th>
         <th>HTTP method</th>
         <th>Request body data format</th>
+        <th>Example</th>
       </tr>
     </thead>
     <tbody>
@@ -26,42 +27,140 @@
       <td> /movies</td>
       <td>GET</td>
       <td> A JSON object holding data about all movies.</td>
+      <td> {
+        "Genre": {
+            "Name": "Science Fiction",
+            "Description": "Science fiction (sometimes shortened to sci-fi or SF) is a genre of speculative fiction that typically deals with imaginative and futuristic concepts such as advanced science and technology, space exploration, time travel, parallel universes, and extraterrestrial life."
+        },
+        "Director": {
+            "Name": "Guillermo del Toro",
+            "Bio": "Guillermo del Toro Gómez is a Mexican filmmaker, author, actor, and former special effects makeup artist.",
+            "Birth": "1964-10-09",
+            "Death": "Present"
+        },
+        "Actors": [],
+        "_id": "5f22889a68904abce8852e2e",
+        "Title": "Pans Labyrinth",
+        "Description": "In 1944 Spain, a lonely girl encounters a faun in an ancient maze and must complete three dangerous tasks to achieve immortality.",
+        "ImageURL": "https://upload.wikimedia.org/wikipedia/en/6/67/Pan%27s_Labyrinth.jpg",
+        "Featured": true
+    }</td>
     </tr>
     <tr align=center>
       <td scope="row">Return data (description, genre, director) about a single movie by title to the user…</td>
       <td> /movies/:title</td>
       <td>GET</td>
       <td>A JSON object holding data about a single movie, containing an ID, title, and some other properties.</td>
+      <td>{
+    "Genre": {
+        "Name": "Horror",
+        "Description": "What is Horror? In literature, horror (pronounced hawr-er) is a genre of fiction whose purpose is to create feelings of fear, dread, repulsion, and terror in the audience—in other words, it develops an atmosphere of horror"
+    },
+    "Director": {
+        "Name": "Steven Spielberg",
+        "Bio": "Steven Spielberg is an American film director, producer, and screenwriter. He is considered one of the founding pioneers of the New Hollywood ers.",
+        "Birth": "1964-10-09",
+        "Death": "Present"
+    },
+    "Actors": [],
+    "_id": "5f228a8b68904abce8852e2f",
+    "Title": "Jaws",
+    "Description": "A shark attacks a town",
+    "ImageURL": "https://www.imdb.com/title/tt0073195/mediaviewer/rm1449540864",
+    "Featured": true
+}</td>
     </tr>
     <tr align=center>
       <td>Return data about a genres (description) by movie title.</td>
       <td>movies/genre/:name</td>
       <td>GET</td>
       <td>A JSON object holding data about a genre (description) by name or title.</td>
+      <td>{
+    "Genre": {
+        "Name": "Action",
+        "Description": "Action film is a genre wherein physical action takes precedence in the storytelling. The film will often have continuous motion and action including physical stunts, chases, fights, battles, and races. The story usually revolves around a hero that has a goal, but is facing incredible odds to obtain it."
+    },
+    "Director": {
+        "Name": "Michael Mann",
+        "Bio": "Michael Kenneth Mann is an American director, screenwriter, and producer of film and television who is best known for his distinctive brand of stylized crime drama",
+        "Birth": "1943-02-05",
+        "Death": "Present"
+    }</td>
     </tr>
     <tr align=center>
       <td>Return data about a director by name </td>
       <td>/movies/director/:name</td>
       <td>GET</td>
       <td>A JSON object holding data about a single director, containing name, birth year, death year, movies.</td>
+      <td> Example: Name: Steven SpielbergBio: Steven Spielberg is an American film director, producer, and screenwriter. He is considered one of the founding pioneers of the New Hollywood ers.Birthday: undefined"</td>
     </tr>
+    <tr align=center>
+      <td>Return data about all users</td>
+      <td>/users</td>
+      <td>GET</td>
+      <td> A JSON object hodling data about users</td>
+      <td>    {
+        "FavouriteMovies": [
+            "5f228aeb68904abce8852e33",
+            "5f228b1468904abce8852e36",
+            "5f22889a68904abce8852e2e"
+        ],
+        "_id": "5f229eca84cf12abb3b989e3",
+        "Username": "jmay1",
+        "Password": "cf123",
+        "Email": "jnm@gmail.com",
+        "Birthday": "1985-02-19T00:00:00.000Z"
+    }</td>
     <tr align=center>
       <td>Allow new users to register</td>
       <td>/users</td>
       <td>POST</td>
       <td> A JSON object holding data about the new user to register/add</td>
+      <td>{
+    "FavouriteMovies": [
+        "5f228ab268904abce8852e30"
+    ],
+    "_id": "5f22d612db77870d19223a78",
+    "Username": "mar",
+    "Password": "cf323",
+    "Email": "mar@gmail.com",
+    "Birthday": "1996-07-15T00:00:00.000Z",
+    "__v": 0
+}</td>
     </tr>
     <tr align=center>
       <td scope="row">Allow users to update their user info (username, password, email, date of birth) </td>
       <td> /users/:name</td>
       <td>PUT</td>
       <td>A JSON object holding data about the current user to update which gives a text message indicating whether the user's account has succesfully changed</td>
+      <td>{
+    "FavouriteMovies": [
+        "5f228ab268904abce8852e30"
+    ],
+    "_id": "5f22d612db77870d19223a78",
+    "Username": "mar",
+    "Password": "cf323",
+    "Email": "mar@gmail.com",
+    "Birthday": "1996-07-15T00:00:00.000Z",
+    "__v": 0
+}</td>
     </tr>
     <tr align=center>
       <td scope="row">Allow users to add a movie to their list of favorites</td>
       <td> /users/:name/movies/:movie_id</td>
       <td>POST</td>
       <td> A JSON object holding data about the movie to add to the user's list of favorite movies which gives a text message indicating whether the user's favorite movie was succesfully added to their list.</td>
+      <td>{
+    "FavouriteMovies": [
+        "5f228ab268904abce8852e30"
+    ],
+    "_id": "5f22d612db77870d19223a78",
+    "Username": "mar",
+    "Password": "cf323",
+    "Email": "mar@gmail.com",
+    "Birthday": "1996-07-15T00:00:00.000Z",
+    "__v": 0
+}</td>
     </tr>
     <tr align=center>
       <td scope="row">Allow users to remove a movie to their list of favorites</td>
@@ -74,6 +173,7 @@
       <td> /users/:name</td>
       <td>DELETE</td>
       <td>A text message indicating whether the user's account was succesfully removed.</td>
+      <td> Movie 5f22889a68904abce8852e2e has been deleted</td>
     </tr>
   </p>
 </div>
