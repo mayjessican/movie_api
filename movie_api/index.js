@@ -16,7 +16,10 @@ app.use(cors());
 
 const { check, validationResult } = require('express-validator');
 
-mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect('mongodb+srv://mayjessican:Morena91@myflixdb.miyru.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 //cors
 // let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
