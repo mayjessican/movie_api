@@ -53,5 +53,3 @@ let User = mongoose.model('User', userSchema);
 
 module.exports.Movie = Movie;
 module.exports.User = User;
-
-mongoimport --host atlas-68m35q-shard-0/myflixdb-shard-00-00.miyru.mongodb.net:27017,myflixdb-shard-00-01.miyru.mongodb.net:27017,myflixdb-shard-00-02.miyru.mongodb.net:27017 --ssl --username mayjessican --password Morena91 --authenticationDatabase admin --db test --collection users --type json --file /mnt/c/Users/mayje/OneDrive/Desktop/Task27/users.json
