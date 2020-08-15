@@ -14,6 +14,19 @@ const Users = Models.User;
 const cors = require('cors');
 app.use(cors());
 
+var allowedOrigins = ['http://localhost:1234', '*'];
+// CORS implementation
+app.use(cors({
+	origin: function(origin, callback){
+	  if(!origin) return callback(null, true);
+	  if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+		var message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+		return callback(new Error(message ), false);
+	  }
+	  return callback(null, true);
+	}
+  }));
+
 const { check, validationResult } = require('express-validator');
 
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -43,7 +56,7 @@ app.get('/documentation', (req, res) => {
 });
 
 // Gets the list of data about ALL movies
-app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/movies', (req, res) => {
   const decoded = jwt_decode(token);
 console.log(decoded);
   Movies.find()
@@ -57,7 +70,7 @@ console.log(decoded);
 });
 
 // Gets the data about a movie title
-app.get('/movies/:title', passport.authenticate('jwt', {session: false}),(req, res) => {
+app.get('/movies/:title', (req, res) => {
   Movies.findOne({ Title: req.params.title })
     .then((movie) => {
       res.json(movie);
@@ -69,7 +82,7 @@ app.get('/movies/:title', passport.authenticate('jwt', {session: false}),(req, r
 });
 
 // Get the genre about a movie
-app.get('/genres/:name', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/genres/:name', (req, res) => {
   Movies.findOne({ "Genre.Name": req.params.name })
     .then((movie) => {
       return res.json(movie);
@@ -81,7 +94,7 @@ app.get('/genres/:name', passport.authenticate('jwt', {session: false}), (req, r
 });
 
 // Gets the data about a movie director
-app.get('/director/:name', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/director/:name', (req, res) => {
   Movies.findOne({ "Director.Name": req.params.name })
     .then((movies) => {
       return res.json(
@@ -99,7 +112,7 @@ app.get('/director/:name', passport.authenticate('jwt', {session: false}), (req,
 let users = []
 
 // Get all users
-app.get('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/users', (req, res) => {
   Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -175,7 +188,7 @@ app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req
   (required)
   Birthday: Date
 }*/
-app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.put('/users/:Username', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
       Username: req.body.Username,
@@ -196,7 +209,7 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req
 });
 
 // Delete a user by username
-app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.delete('/users/:Username', (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
       if (!user) {
@@ -212,7 +225,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), (
 });
 
 // Add a movie to a user's list of favorites
-app.post('/users/:name/movies/:movie_id', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.post('/users/:name/movies/:movie_id', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.name }, {
      $push: { FavouriteMovies: req.params.movie_id }
    },
@@ -228,7 +241,7 @@ app.post('/users/:name/movies/:movie_id', passport.authenticate('jwt', {session:
 });
 
 //Deletes a movie from user favourites
-app.delete('/users/:name/movies/:movie_id', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.delete('/users/:name/movies/:movie_id', (req, res) => {
   let movie_id = req.params.movie_id;
   let userName = req.params.name;
   if (userName) {
@@ -242,6 +255,6 @@ app.delete('/users/:name/movies/:movie_id', passport.authenticate('jwt', {sessio
 // listen for requests
 //app.listen(8080, function(){ console.log('Server listening on 8080...')});
 const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0',() => {
+app.listen(port, '0.0.0.0', () => {
  console.log('Listening on Port ' + port);
 });
