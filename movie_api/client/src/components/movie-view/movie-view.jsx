@@ -1,5 +1,6 @@
 import React from 'react';
 import { MainView } from '../main-view/main-view';
+import { Link } from "react-router-dom";
 
 export class MovieView extends React.Component {
 
@@ -9,12 +10,17 @@ export class MovieView extends React.Component {
     this.state = {};
   }
 
+  BackButton = () => {
+    return <MainView />
+  }
+
   render() {
     const { movie } = this.props;
 
     if (!movie) return null;
 
     return (
+      <div>
       <div className="movie-view">
         <img className="movie-poster" src={movie.ImagePath} />
         <div className="movie-title">
@@ -36,11 +42,9 @@ export class MovieView extends React.Component {
         </div>
        </div>
        <div>
-         <link to={./MainView}>
-         <button>MainView</button>
-         </link>
+      <button onClick={ this.BackButton }>MainView</button>
        </div>
-
+       </div>
      );
   }
 }

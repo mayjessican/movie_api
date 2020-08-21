@@ -29,7 +29,7 @@ app.use(cors({
 
 const { check, validationResult } = require('express-validator');
 
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( "mongodb+srv://mayjessican:Morena91@myflixdb.miyru.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
 
 //Middleware
 app.use(express.static('public/documentation.html'));
@@ -57,8 +57,8 @@ app.get('/documentation', (req, res) => {
 
 // Gets the list of data about ALL movies
 app.get('/movies', (req, res) => {
-  const decoded = jwt_decode(token);
-console.log(decoded);
+  //const decoded = jwt_decode(token);
+//console.log(decoded);
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);

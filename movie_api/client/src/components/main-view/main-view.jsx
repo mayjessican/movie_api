@@ -17,10 +17,11 @@ export class MainView extends React.Component {
 // One of the "hooks" available in a React Component
 componentDidMount() {
   axios
-    //.get('<my-api-endpoint/movies>')
-    .get("https://helloworld-test-1234.herokuapp.com/movies")
+    .get('http://localhost:8080/movies')
+    //.get("https://helloworld-test-1234.herokuapp.com/movies")
     .then((response) => {
       // Assign the result to the state
+      console.log(response)
       this.setState({
         movies: response.data,
       });
@@ -54,21 +55,21 @@ componentDidMount() {
     }
   }
 
-class MainView extends React.Component {
-    constructor() {
-      // Call the superclass constructor
-      // so React can initialize it
-      super();
+// class MainView extends React.Component {
+//     constructor() {
+//       // Call the superclass constructor
+//       // so React can initialize it
+//       super();
   
-      // Initialize the state to an empty object so we can destructure it later
-      this.state = {};
-    }
+//       // Initialize the state to an empty object so we can destructure it later
+//       this.state = {};
+//     }
   
-    // This overrides the render() method of the superclass
-    // No need to call super() though, as it does nothing by default
-    render() {
-      return (
-       <div className="main-view"></div>
-      );
-    }
-  }
+//     // This overrides the render() method of the superclass
+//     // No need to call super() though, as it does nothing by default
+//     render() {
+//       return (
+//        <div className="main-view"></div>
+//       );
+//     }
+//   }
