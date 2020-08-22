@@ -1,6 +1,9 @@
 import React from 'react';
+import ReactDOM from "react-dom";
 import { MainView } from '../main-view/main-view';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 
 export class MovieView extends React.Component {
 
@@ -10,14 +13,42 @@ export class MovieView extends React.Component {
     this.state = {};
   }
 
-  BackButton = () => {
-    return <MainView />
-  }
+  // BackButton = () => {
+  //   return <MainView />
+  // }
+
+  // BackButton = () => {
+  //   Router.push("./main-view")
+  // }
+
+  // function User(props) {
+  //   return <h1>Hello {props.match.params.username}!</h1>;
+  // }
+  
+  // ReactDOM.render(
+  //   <Router>
+  //     <Route path="main-view/" component={User} />
+  //   </Router>,
+  //   node
+  // );
 
   render() {
     const { movie } = this.props;
 
     if (!movie) return null;
+
+    // ReactDOM.render(
+    //   <Router>
+    //     <div>
+    //       <Route exact path="/">
+    //         <MainView />
+    //       </Route>
+    //       <Route path="/main-view">
+    //         <MainView />
+    //       </Route>
+    //     </div>
+    //   </Router>
+    // );
 
     return (
       <div>
@@ -42,7 +73,10 @@ export class MovieView extends React.Component {
         </div>
        </div>
        <div>
-      <button onClick={ this.BackButton }>MainView</button>
+         <Link to={"/"}>
+         <button onclick={() => this.BackButton()}>Back</button>
+         </Link>
+      {/* <button onClick={ this.BackButton }>MainView</button> */}
        </div>
        </div>
      );
