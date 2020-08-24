@@ -55,9 +55,10 @@ componentDidMount() {
   
       return (
        <div className="main-view">
-        {selectedMovie ? <MovieView movie={selectedMovie}/>
+        {selectedMovie ? <MovieView movie={selectedMovie} onClick={ movie => this.onMovieClick(movie) }/>
            : movies.map(movie => (
              <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
+             //<MovieView key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
            ))
         }
        </div>
