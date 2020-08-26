@@ -16,7 +16,7 @@ export function RegistrationView(props) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-axios.post('https://helloworld-test-1234.herokuapp.com/users', {
+axios.post('https://localhost:8080/users', {
     Username: username,
     Password: password,
     Email: email,
