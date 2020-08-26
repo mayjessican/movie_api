@@ -22,8 +22,8 @@ export class MainView extends React.Component {
 // One of the "hooks" available in a React Component
 componentDidMount() {
   axios
-    //.get('http://localhost:8080/movies')
-    .get("https://helloworld-test-1234.herokuapp.com/movies")
+    .get('http://localhost:8080/movies')
+    //.get("https://helloworld-test-1234.herokuapp.com/movies")
     .then((response) => {
       // Assign the result to the state
       console.log(response)
@@ -48,32 +48,32 @@ componentDidMount() {
       });
     }
 
-    componentDidMount() {
-      let accessToken = localStorage.getItem('token');
-      if (accessToken !== null) {
-        this.setState({
-          user: localStorage.getItem('user')
-        });
-        this.getMovies(accessToken);
-      }
-    }
+    // componentDidMount() {
+    //   let accessToken = localStorage.getItem('token');
+    //   if (accessToken !== null) {
+    //     this.setState({
+    //       user: localStorage.getItem('user')
+    //     });
+    //     this.getMovies(accessToken);
+    //   }
+    // }
 
-    onLoggedIn(authData) {
-      console.log(authData);
-      this.setState({
-        user: authData.user.Username
-      });
+    // onLoggedIn(authData) {
+    //   console.log(authData);
+    //   this.setState({
+    //     user: authData.user.Username
+    //   });
     
-      localStorage.setItem('token', authData.token);
-      localStorage.setItem('user', authData.user.Username);
-      this.getMovies(authData.token);
+    //   localStorage.setItem('token', authData.token);
+    //   localStorage.setItem('user', authData.user.Username);
+    //   this.getMovies(authData.token);
 
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-    }
+    //   localStorage.removeItem('token');
+    //   localStorage.removeItem('user');
+    // }
 
     getMovies(token) {
-      axios.get('<localhost:8080/movies', {
+      axios.get('<https://helloworld-test-1234.herokuapp.com/movies', {
         headers: { Authorization: `Bearer ${token}`}
       })
       .then(response => {
@@ -93,8 +93,8 @@ componentDidMount() {
       if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
   
       // Before the movies have been loaded
-      if (!movies) return <div className="main-view"/>;
-        // return (
+      // if (!movies) return <div className="main-view"/>;
+      // return (
       //  <div className="main-view">
       //   {selectedMovie ? <MovieView movie={selectedMovie} onClick={ movie => this.onMovieClick(movie) }/>
       //      : movies.map(movie => (

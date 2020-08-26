@@ -12,7 +12,7 @@ export function LoginView(props) {
     e.preventDefault();
     console.log(username, password);
     /* Send a request to the server for authentication */
-    axios.post('localhost:1234/login', {
+    axios.post('localhost:8080/users', {
       Username: username,
       Password: password
     })
