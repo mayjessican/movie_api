@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from "react-dom";
+import PropTypes from 'prop-types'
 import { MainView } from '../main-view/main-view';
 
 export class MovieView extends React.Component {
