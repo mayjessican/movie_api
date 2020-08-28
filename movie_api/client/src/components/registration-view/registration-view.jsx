@@ -79,7 +79,7 @@ axios.post('https://localhost:8080/users', {
                 label="Confirm you really want to register for myFlix"
             />
         </Form.Group>
-        <Button type="submit" onClick={handleSubmit}>
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
             Register
         </Button>{" "}
         <Link to={"/login"}>

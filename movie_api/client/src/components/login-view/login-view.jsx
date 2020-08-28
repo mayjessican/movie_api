@@ -12,7 +12,7 @@ export function LoginView(props) {
     e.preventDefault();
     console.log(username, password);
     /* Send a request to the server for authentication */
-    axios.post('http://localhost:8080/users', {
+    axios.post('http://localhost:8080/login', {
       Username: username,
       Password: password
     })
@@ -21,11 +21,11 @@ export function LoginView(props) {
       props.onLoggedIn(data);
     })
     .catch(e => {
-      console.log('no such user')
+      console.log('no such user', e)
     });
 
     /* then call props.onLoggedIn(username) */
-    props.onLoggedIn(username)
+   // props.onLoggedIn(username)
   };
 
   return (
