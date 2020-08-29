@@ -55,7 +55,7 @@ export class MainView extends React.Component {
     }
 
     getMovies(token) {
-      axios.get('http:// localhost:8080', {
+      axios.get('https://helloworld-test-1234.herokuapp.com/movies', {
         headers: { Authorization: `Bearer ${token}`}
       })
       .then(response => {
@@ -105,13 +105,12 @@ export class MainView extends React.Component {
       if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
       return movies.map(m => <MovieCard key={m._id} movie={m}/>)}
       }/>
-    {/* <Route exact path="/" render={() => {
-      if (!user) return <RegistrationView on
-    }} */}
+    {/* <Route exact path="/" render={() => { <RegistrationView />} />
+    } */}
     <Route path="/register" render={() => <RegistrationView />} />
-    <Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
+    <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
     <Route path="/directors/:name" render={({ match }) => {
-      if (!movies) return <div className="main-view"/>;
+      //if (!movies) return <div className="main-view"/>;
       return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director}/>}
     } />
     <Route exact path="/genres/:name" render={({ match }) => {

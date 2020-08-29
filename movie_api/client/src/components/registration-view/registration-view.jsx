@@ -13,10 +13,10 @@ export function RegistrationView(props) {
 	const [email, createEmail] = useState("");
 	const [birthday, createDob] = useState("");
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
+const handleSubmit = (e) => {
+	e.preventDefault();
 
-axios.post('https://localhost:8080/users', {
+axios.post('https://helloworld-test-1234.herokuapp.com/users', {
     Username: username,
     Password: password,
     Email: email,
