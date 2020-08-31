@@ -19,7 +19,7 @@ export class DirectorView extends React.Component {
 
     return (
       <div className="director-view">
-        {/* <Container>
+        <Container>
           <Card style={{ width: '25rem' }}>
             <Card.Body>
               <Card.Title>{director.Name}</Card.Title>
@@ -31,7 +31,7 @@ export class DirectorView extends React.Component {
               </Link>
             </Card.Body>
           </Card>
-        </Container> */}
+        </Container>
         <h1>Hello</h1>
       </div>
     );

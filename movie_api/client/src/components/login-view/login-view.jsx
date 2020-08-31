@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import './login-view.scss'
+import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 
 
 export function LoginView(props) {
@@ -12,7 +15,7 @@ export function LoginView(props) {
     e.preventDefault();
     console.log(username, password);
     /* Send a request to the server for authentication */
-    axios.post('http://localhost:8080/login', {
+    axios.post('https://helloworld-test-1234.herokuapp.com/login', {
       Username: username,
       Password: password
     })
@@ -29,6 +32,7 @@ export function LoginView(props) {
   };
 
   return (
+    <Container>
     <Form>
       <Form.Group controlId="formBasicUsername">
         <Form.Label>Username:</Form.Label>
@@ -42,6 +46,15 @@ export function LoginView(props) {
       <Button variant="primary" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
+      <Link to={`/register`}>
+         <Button variant='dark link' type="submit" onClick={handleSubmit}>
+            Register Here
+         </Button>
+      </Link>
+      <Button variant='dark link' type="submit" onClick={handleSubmit}>
+            Register Here
+      </Button>
     </Form>
+    </Container>
   )
 }

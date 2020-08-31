@@ -6,12 +6,13 @@ import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import PropTypes from "prop-types";
 
 export function RegistrationView(props) {
-	const [username, createUsername] = useState("");
-	const [password, createPassword] = useState("");
-	const [email, createEmail] = useState("");
-	const [birthday, createDob] = useState("");
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("");
+	const [birthday, setDob] = useState("");
 
 const handleSubmit = (e) => {
 	e.preventDefault();
