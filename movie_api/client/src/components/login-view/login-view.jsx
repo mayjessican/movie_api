@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import './login-view.scss'
 import { Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 
 
 export function LoginView(props) {
@@ -29,32 +29,31 @@ export function LoginView(props) {
 
     /* then call props.onLoggedIn(username) */
    // props.onLoggedIn(username)
-  };
-
+  }; 
   return (
     <Container>
-    <Form>
-      <Form.Group controlId="formBasicUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
-      </Form.Group>
+      <Form>
+        <Form.Group controlId="formBasicUsername">
+          <Form.Label>Username:</Form.Label>
+          <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
+        </Form.Group>
 
-      <Form.Group controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-      </Form.Group>
-      <Button variant="primary" type="submit" onClick={handleSubmit}>
-        Submit
-      </Button>
-      <Link to={`/register`}>
-         <Button variant='dark link' type="submit" onClick={handleSubmit}>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+        </Form.Group>
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
+          Submit
+        </Button>{' '}
+        {/* <Link to={`/register`}>
+          <Button variant='dark link' type="submit" onClick={handleSubmit}>
             Register Here
-         </Button>
-      </Link>
-      <Button variant='dark link' type="submit" onClick={handleSubmit}>
-            Register Here
-      </Button>
-    </Form>
+          </Button>
+        </Link> */}
+        <Button variant='dark link' type="submit" onClick={() => props.onRegister(true) }>
+          Register Here
+        </Button>
+      </Form>
     </Container>
-  )
+  ); 
 }
