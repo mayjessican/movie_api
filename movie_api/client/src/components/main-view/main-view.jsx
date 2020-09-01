@@ -134,7 +134,7 @@ export class MainView extends React.Component {
             )}
           />
           <Route
-            path="/directors/:name"
+            path="/director/:name"
             render={({ match }) => {
               //if (!movies) return <div className="main-view"/>;
               return (
