@@ -32,7 +32,6 @@ export class DirectorView extends React.Component {
             </Card.Body>
           </Card>
         </Container>
-        <h1>Hello</h1>
       </div>
     );
   }
