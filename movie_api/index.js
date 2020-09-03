@@ -228,7 +228,7 @@ app.delete('/users/:Username', (req, res) => {
 });
 
 // Add a movie to a user's list of favorites
-app.post('/users/:name/movies/:movie_id', (req, res) => {
+app.post('/users/:name/movies/:_id', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.name }, {
      $push: { FavouriteMovies: req.params._id }
    },
@@ -244,8 +244,8 @@ app.post('/users/:name/movies/:movie_id', (req, res) => {
 });
 
 //Deletes a movie from user favourites
-app.delete('/users/:name/movies/:movie_id', (req, res) => {
-  let movie_id = req.params.movie_id;
+app.delete('/users/:name/movies/:_id', (req, res) => {
+  let movie_id = req.params._id;
   let userName = req.params.name;
   if (userName) {
     delete favourite[favourite.indexOf(movie_id)]

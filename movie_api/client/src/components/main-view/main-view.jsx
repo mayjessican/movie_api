@@ -108,6 +108,9 @@ export class MainView extends React.Component {
     return (
       <Router>
         <div className="main-view">
+        <Link to={'/user/:userName'}>
+            <Button variant="link">View Profile</Button>
+          </Link>
           <Route
             exact path="/"
             render={() => {
@@ -115,7 +118,7 @@ export class MainView extends React.Component {
                 return (
                   <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                 ); */
-              return movies.map((m) => <MovieCard key={m.movie_id} movie={m} />); // Here
+              return movies.map((m) => <MovieCard key={m._id} movie={m} />); 
             }}
           />
 
@@ -123,7 +126,7 @@ export class MainView extends React.Component {
             path="/movies/:movieId"
             render={({ match }) => (
               <MovieView
-                movie={movies.find((m) => m.movie_id === match.params.movieId)}
+                movie={movies.find((m) => m._id === match.params.movieId)}
               />
             )}
           />
@@ -155,25 +158,11 @@ export class MainView extends React.Component {
             }}
           />
           <Route
-            exact path="/user"
+            exact path="/user/:userName"
             render={() => <ProfileView movies={movies} />}
           />
-          <Route path="/user/update" render={() => <UpdateProfile />} />
-             {selectedMovie ? (
-                <MovieView
-                   movie={selectedMovie}
-                   onClick={() => this.onButtonClick()}
-                />
-               ) : (
-                 movies.map((movie) => (
-                    <MovieCard
-                       key={movie._id}
-                       movie={movie}
-                       onClick={(movie) => this.onMovieClick(movie)}
-                    />
-                 )
-               ))}
-        </div>
+         <Route path="/user/update" render={() => <UpdateProfile />} />
+       </div>
       </Router>
     );
   }

@@ -2,6 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { MainView } from "../main-view/main-view";
+import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+
 
 export class MovieView extends React.Component {
   constructor() {
@@ -9,14 +12,6 @@ export class MovieView extends React.Component {
 
     this.state = {};
   }
-
-  // BackButton = () => {
-  //   return <MainView />
-  // }
-
-  // function User(props) {
-  //   return <h1>Hello {props.match.params.username}!</h1>;
-  // }
 
   render() {
     const { movie, onClick } = this.props;
@@ -52,7 +47,9 @@ export class MovieView extends React.Component {
           </div>
         </div>
         <div>
-          <button onClick={() => onClick(null)}>MainView</button>
+        <Link to={`/`}>
+          <Button variant="link">Back</Button>
+        </Link>
         </div>
       </div>
     );
