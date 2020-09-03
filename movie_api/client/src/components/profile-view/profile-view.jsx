@@ -33,7 +33,7 @@ export class ProfileView extends React.Component {
     const username = localStorage.getItem('user');
 
     axios
-      .get('localhost:8080', {
+      .get(`https://helloworld-test-1234.herokuapp.com/users/${username}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
@@ -53,9 +53,9 @@ export class ProfileView extends React.Component {
 
   render() {
     const { movies } = this.props;
-    // const favoriteMovieList = movies.filter((movie) =>
-    //   this.state.favoriteMovies.includes(movie._id)
-    // );
+    const favoriteMovieList = movies.filter((movie) =>
+      this.state.favoriteMovies.includes(movie._id)
+    );
     return (
       <div>
         <Container>
@@ -66,10 +66,10 @@ export class ProfileView extends React.Component {
               <Card.Text>Username: {this.state.Username}</Card.Text>
               <Card.Text>Password: xxx</Card.Text>
               <Card.Text>Email: {this.state.Email}</Card.Text>
-              <Card.Text>Birthday {this.state.Birthday}</Card.Text>
+              <Card.Text>Birthday: {this.state.Birthday}</Card.Text>
               Favorite Movies:
-              {/* {favoriteMovieList.map((movie) => (
-                <div key={movie._id} className="fav-movies-button">
+              {favoriteMovieList.map((movie) => (
+                <div key={movie.movie_id} className="fav-movies-button">
                   <Link to={`/movies/${movie._id}`}>
                     <Button variant="link">{movie.Title}</Button>
                   </Link>
@@ -80,7 +80,7 @@ export class ProfileView extends React.Component {
                     Remove Favorite
                   </Button>
                 </div>
-              ))} */}
+              ))}
               <br />
               <br />
               <Link to={'/user/update'}>

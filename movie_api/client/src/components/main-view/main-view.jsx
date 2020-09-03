@@ -109,27 +109,21 @@ export class MainView extends React.Component {
       <Router>
         <div className="main-view">
           <Route
-            exact
-            path="/"
+            exact path="/"
             render={() => {
               /* if (!user)
                 return (
                   <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                 ); */
-              return movies.map((m) => <MovieCard key={m._id} movie={m} />); // Here
+              return movies.map((m) => <MovieCard key={m.movie_id} movie={m} />); // Here
             }}
           />
-          {/* <Route exact path="/register" render={() => { <RegistrationView />} />
-    } */}
-          {/* <Link to="/register"></Link> */}
-          {/* <button onClick={ () =>onClick( RegistrationView ) }>Registration</button> */}
 
-          {/* <Route path="/register" render={() => <RegistrationView />} /> */}
           <Route
             path="/movies/:movieId"
             render={({ match }) => (
               <MovieView
-                movie={movies.find((m) => m._id === match.params.movieId)}
+                movie={movies.find((m) => m.movie_id === match.params.movieId)}
               />
             )}
           />
@@ -148,8 +142,7 @@ export class MainView extends React.Component {
             }}
           />
           <Route
-            exact
-            path="/genres/:name"
+            exact path="/genres/:name"
             render={({ match }) => {
               if (!movies) return <div className="main-view" />;
               return (
@@ -161,6 +154,25 @@ export class MainView extends React.Component {
               );
             }}
           />
+          <Route
+            exact path="/user"
+            render={() => <ProfileView movies={movies} />}
+          />
+          <Route path="/user/update" render={() => <UpdateProfile />} />
+             {selectedMovie ? (
+                <MovieView
+                   movie={selectedMovie}
+                   onClick={() => this.onButtonClick()}
+                />
+               ) : (
+                 movies.map((movie) => (
+                    <MovieCard
+                       key={movie._id}
+                       movie={movie}
+                       onClick={(movie) => this.onMovieClick(movie)}
+                    />
+                 )
+               ))}
         </div>
       </Router>
     );

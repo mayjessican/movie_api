@@ -230,7 +230,7 @@ app.delete('/users/:Username', (req, res) => {
 // Add a movie to a user's list of favorites
 app.post('/users/:name/movies/:movie_id', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.name }, {
-     $push: { FavouriteMovies: req.params.movie_id }
+     $push: { FavouriteMovies: req.params._id }
    },
    { new: true }, // This line makes sure that the updated document is returned
   (err, updatedUser) => {
