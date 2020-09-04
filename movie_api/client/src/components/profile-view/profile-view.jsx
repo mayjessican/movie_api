@@ -1,5 +1,4 @@
-  
-import React from 'react';
+import React, { useState} from 'react';
 //Routing
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -8,7 +7,89 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
 
+// export function ProfileView(props) {
+//   const [username, setUsername] = useState("");
+// 	const [password, setPassword] = useState("");
+// 	const [email, setEmail] = useState("");
+// 	const [birthday, setDob] = useState("");
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+
+//     axios.post('https://helloworld-test-1234.herokuapp.com/users', {
+//       Username: username,
+//       Password: password,
+//       Email: email,
+//       Birthday: birthday
+//     })
+//     .then(response => {
+//       const data = response.data;
+//       console.log(data);
+//       window.open('/', '_self');
+//     })
+//     .catch(e => {
+//       console.log('error registering the user')
+//     });
+//   }}
+
+//   return (
+//     <Container style={{ width: "42rem" }}>
+//       <Form>
+//         <Form.Group controlId="formBasicUsername">
+//           <Form.Label>Username</Form.Label>
+//           <Form.Control
+//             type="text"
+//             placeholder="Username"
+//             value={username}
+//             onChange={(e) => setUsername(e.target.value)}
+//           />
+//         </Form.Group>
+//         <Form.Group controlId="formBasicPassword">
+//           <Form.Label>Password</Form.Label>
+//           <Form.Control
+//             type="password"
+//             placeholder="Password"
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//           />
+//         </Form.Group>
+//         <Form.Group controlId="formBasicEmail">
+//           <Form.Label>Email address</Form.Label>
+//           <Form.Control
+//             type="email"
+//             placeholder="Enter email"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//           />
+//           <Form.Text className="text-muted">
+//             We will never share your information with anyone
+//           </Form.Text>
+//         </Form.Group>
+//         <Form.Group controlId="formBasicDob">
+//           <Form.Label>Birthday</Form.Label>
+//           <Form.Control
+//             type="date"
+//             placeholder="12/31/1999"
+//             value={birthday}
+//             onChange={(e) => setDob(e.target.value)}
+//           />
+//         </Form.Group>
+//         <Form.Group controlId="formBasicCheckbox">
+//           <Form.Check
+//             type="checkbox"
+//             label="Confirm you want to update your profile."
+//           />
+//         </Form.Group>
+//         <Button variant="primary" type="submit" onClick={handleSubmit}>
+//           Update
+//         </Button>{" "}
+//       </Form>
+//     </Container>
+//   );  
+  
+//start here  
 export class ProfileView extends React.Component {
   constructor(props) {
     super(props);
@@ -31,9 +112,10 @@ export class ProfileView extends React.Component {
 
   getUser(token) {
     const username = localStorage.getItem('user');
+    console.log(username)
 
     axios
-      .get(`https://helloworld-test-1234.herokuapp.com/users/${username}`, {
+      .get(`https://helloworld-test-1234.herokuapp.com/users/${userName}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
@@ -56,7 +138,7 @@ export class ProfileView extends React.Component {
     const favoriteMovieList = movies.filter((movie) =>
       this.state.favoriteMovies.includes(movie._id)
     );
-    return (
+      return (
       <div>
         <Container>
           <h1>My Profile</h1>

@@ -11,6 +11,7 @@ import { RegistrationView } from "../registration-view/registration-view";
 import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
 import { ProfileView } from "../profile-view/profile-view";
+import Button from 'react-bootstrap/Button';
 
 export class MainView extends React.Component {
   constructor() {
@@ -108,16 +109,16 @@ export class MainView extends React.Component {
     return (
       <Router>
         <div className="main-view">
-        <Link to={'/user/:userName'}>
+          <Link to={`/user/${user}`}>
             <Button variant="link">View Profile</Button>
           </Link>
           <Route
             exact path="/"
             render={() => {
-              /* if (!user)
+              if (!user)
                 return (
                   <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-                ); */
+                );
               return movies.map((m) => <MovieCard key={m._id} movie={m} />); 
             }}
           />
@@ -133,7 +134,7 @@ export class MainView extends React.Component {
           <Route
             path="/directors/:name"
             render={({ match }) => {
-              //if (!movies) return <div className="main-view"/>;
+              if (!movies) return <div className="main-view"/>;
               return (
                 <DirectorView
                   director={
@@ -158,10 +159,16 @@ export class MainView extends React.Component {
             }}
           />
           <Route
-            exact path="/user/:userName"
+            exact path="/user/userName"
             render={() => <ProfileView movies={movies} />}
           />
-         <Route path="/user/update" render={() => <UpdateProfile />} />
+          <Route path="/user/update" render={() => <UpdateProfile />} />
+          {/* <Link to={'/user/:userName'}>
+            <Button variant="link">View Profile</Button>
+          </Link>"/user/update" render={() => <UpdateProfile />} /> */}
+                {/* <Button size="sm" onClick={() => this.onLoggedOut()}>
+                <b>Log Out</b>
+              </Button> */}
        </div>
       </Router>
     );
