@@ -54,6 +54,43 @@ export class ProfileView extends React.Component {
       });
   }
 
+  deleteFavouriteMovie(movieId) {
+    console.log(this.props.movies);
+    axios
+      .delete(
+        `https://helloworld-test-1234.herokuapp.com/users/${localStorage.getItem(
+          'user'
+        )}/Movies/${movieId}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        }
+      )
+      .then((res) => {
+        alert('Removed movie from favourites');
+      })
+      .catch((e) => {
+        alert('error removing movie' + e);
+      });
+  }
+
+  deleteUser(e) {
+    axios
+      .delete(
+        `https://helloworld-test-1234.herokuapp.com/users/${localStorage.getItem('user')}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        }
+      )
+      .then((response) => {
+        alert('Account deleted');
+        localStorage.removeItem('token', 'user');
+        window.open('/');
+      })
+      .catch((event) => {
+        alert('failed to delete user');
+      });
+  }
+
   render() {
     const { movies } = this.props;
     console.log("ProfileView", this.state)
@@ -75,22 +112,15 @@ export class ProfileView extends React.Component {
               <Card.Text>Email: {this.state.Email}</Card.Text>
               <Card.Text>Birthday: {this.state.Birthday}</Card.Text>
               Favourite Movies:
-              {/* {FavouriteMovieList.map((movie) => (
-                <div key={movie.movie_id} className="fav-movies-button">
+              {/* {favouriteMovieList.map((movie) => (
+                <div key={movie._id} className='fav-movies-button'>
                   <Link to={`/movies/${movie._id}`}>
-                    <Button variant="link">{movie.Title}</Button>
+                    <Button variant='link'>{movie.Title}</Button>
                   </Link>
                   <Button
-                    size="sm"
-                    onClick={(e) => this.deleteFavouriteMovie(movie._id)}
-                  >
+                    variant='dark'
+                    onClick={(e) => this.deleteFavouriteMovie(movie._id)} >
                     Remove Favourite
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={(e) => this.addFavouriteMovie(movie._id)}
-                  >
-                    Add Favourite
                   </Button>
                 </div>
               ))} */}
@@ -101,7 +131,6 @@ export class ProfileView extends React.Component {
                 <br />
                 <br />
               </Link>
-              <Button onClick={() => this.deleteUser()}>Delete User</Button>
               <br />
               <br />
               <Link to={`/`}>Back</Link>

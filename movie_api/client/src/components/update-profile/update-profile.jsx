@@ -31,7 +31,8 @@ export function UpdateProfile(props) {
         window.open('/', '_self');
         })
         .catch(e => {
-        console.log('error updating the user')
+        console.log('error updating the user');
+        alert('This movie has been added to your Favourites.');
         });
         }
 
