@@ -8,99 +8,19 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-
-// export function ProfileView(props) {
-//   const [username, setUsername] = useState("");
-// 	const [password, setPassword] = useState("");
-// 	const [email, setEmail] = useState("");
-// 	const [birthday, setDob] = useState("");
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-
-//     axios.post('https://helloworld-test-1234.herokuapp.com/users', {
-//       Username: username,
-//       Password: password,
-//       Email: email,
-//       Birthday: birthday
-//     })
-//     .then(response => {
-//       const data = response.data;
-//       console.log(data);
-//       window.open('/', '_self');
-//     })
-//     .catch(e => {
-//       console.log('error registering the user')
-//     });
-//   }}
-
-//   return (
-//     <Container style={{ width: "42rem" }}>
-//       <Form>
-//         <Form.Group controlId="formBasicUsername">
-//           <Form.Label>Username</Form.Label>
-//           <Form.Control
-//             type="text"
-//             placeholder="Username"
-//             value={username}
-//             onChange={(e) => setUsername(e.target.value)}
-//           />
-//         </Form.Group>
-//         <Form.Group controlId="formBasicPassword">
-//           <Form.Label>Password</Form.Label>
-//           <Form.Control
-//             type="password"
-//             placeholder="Password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//           />
-//         </Form.Group>
-//         <Form.Group controlId="formBasicEmail">
-//           <Form.Label>Email address</Form.Label>
-//           <Form.Control
-//             type="email"
-//             placeholder="Enter email"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//           />
-//           <Form.Text className="text-muted">
-//             We will never share your information with anyone
-//           </Form.Text>
-//         </Form.Group>
-//         <Form.Group controlId="formBasicDob">
-//           <Form.Label>Birthday</Form.Label>
-//           <Form.Control
-//             type="date"
-//             placeholder="12/31/1999"
-//             value={birthday}
-//             onChange={(e) => setDob(e.target.value)}
-//           />
-//         </Form.Group>
-//         <Form.Group controlId="formBasicCheckbox">
-//           <Form.Check
-//             type="checkbox"
-//             label="Confirm you want to update your profile."
-//           />
-//         </Form.Group>
-//         <Button variant="primary" type="submit" onClick={handleSubmit}>
-//           Update
-//         </Button>{" "}
-//       </Form>
-//     </Container>
-//   );  
-  
+ 
 //start here  
 export class ProfileView extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      username: null,
-      password: null,
-      email: null,
-      birthday: null,
-      favoriteMovies: [],
-      movies: [],
+      Username: null,
+      Password: null,
+      Email: null,
+      Birthday: null,
+      FavouriteMovies: [],
+      Movies: [],
     };
   }
 
@@ -112,21 +32,23 @@ export class ProfileView extends React.Component {
 
   getUser(token) {
     const username = localStorage.getItem('user');
-    console.log(username)
+    console.log('username', username);
+    console.log('token', token);
 
     axios
-      .get(`https://helloworld-test-1234.herokuapp.com/users/${userName}`, {
+      .get(`https://helloworld-test-1234.herokuapp.com/users/${username}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-
       .then((res) => {
+        console.log('res', res); // we need to console log here in case the setState has error we can still see the log
         this.setState({
           Username: res.data.Username,
           Password: res.data.Password,
           Email: res.data.Email,
           Birthday: res.data.Birthday,
-          FavoriteMovies: res.data.FavoriteMovies,
+          FavouriteMovies: res.data.FavouriteMovies, // we need to make sure user has FavouriteMovies, if not, we need to check
         });
+        // If we console.log here, when the setState above has error, it will jump to the catch below immediately, without executing this line
       })
       .catch(function (err) {
         console.log(err);
@@ -135,10 +57,14 @@ export class ProfileView extends React.Component {
 
   render() {
     const { movies } = this.props;
-    const favoriteMovieList = movies.filter((movie) =>
-      this.state.favoriteMovies.includes(movie._id)
-    );
-      return (
+    let FavouriteMovieList = [];
+    if (this.state.FavouriteMovies) {
+        FavouriteMovieList = movies.filter((movie) =>
+          this.state.FavouriteMovies.includes(movie._id)
+        );
+    }
+    
+    return (
       <div>
         <Container>
           <h1>My Profile</h1>
@@ -149,17 +75,23 @@ export class ProfileView extends React.Component {
               <Card.Text>Password: xxx</Card.Text>
               <Card.Text>Email: {this.state.Email}</Card.Text>
               <Card.Text>Birthday: {this.state.Birthday}</Card.Text>
-              Favorite Movies:
-              {favoriteMovieList.map((movie) => (
+              Favourite Movies:
+              {FavouriteMovieList.map((movie) => (
                 <div key={movie.movie_id} className="fav-movies-button">
                   <Link to={`/movies/${movie._id}`}>
                     <Button variant="link">{movie.Title}</Button>
                   </Link>
                   <Button
                     size="sm"
-                    onClick={(e) => this.deleteFavoriteMovie(movie._id)}
+                    onClick={(e) => this.deleteFavouriteMovie(movie._id)}
                   >
-                    Remove Favorite
+                    Remove Favourite
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={(e) => this.addFavouriteMovie(movie._id)}
+                  >
+                    Add Favourite
                   </Button>
                 </div>
               ))}

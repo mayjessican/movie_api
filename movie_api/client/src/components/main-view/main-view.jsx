@@ -52,8 +52,12 @@ export class MainView extends React.Component {
     localStorage.setItem("user", authData.user.Username);
     this.getMovies(authData.token);
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    // Why you set it above and you remove it herE?
+    // That's why we can not get it in the profie view
+    //OK, that was shown for me to do in the lesson, which is why I did it
+    // it's used only when you want to delete a user, not now
+    /* localStorage.removeItem("token");
+    localStorage.removeItem("user"); */
   }
 
   getMovies(token) {
@@ -159,7 +163,7 @@ export class MainView extends React.Component {
             }}
           />
           <Route
-            exact path="/user/userName"
+            exact path="/user/:userName"
             render={() => <ProfileView movies={movies} />}
           />
           <Route path="/user/update" render={() => <UpdateProfile />} />
