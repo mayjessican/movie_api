@@ -40,15 +40,14 @@ export class ProfileView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log('res', res); // we need to console log here in case the setState has error we can still see the log
+        console.log('res', res); 
         this.setState({
           Username: res.data.Username,
           Password: res.data.Password,
           Email: res.data.Email,
           Birthday: res.data.Birthday,
-          FavouriteMovies: res.data.FavouriteMovies, // we need to make sure user has FavouriteMovies, if not, we need to check
+          FavouriteMovies: res.data.FavouriteMovies, 
         });
-        // If we console.log here, when the setState above has error, it will jump to the catch below immediately, without executing this line
       })
       .catch(function (err) {
         console.log(err);
@@ -57,12 +56,12 @@ export class ProfileView extends React.Component {
 
   render() {
     const { movies } = this.props;
-    let FavouriteMovieList = [];
-    if (this.state.FavouriteMovies) {
-        FavouriteMovieList = movies.filter((movie) =>
-          this.state.FavouriteMovies.includes(movie._id)
-        );
-    }
+    console.log("ProfileView", this.state)
+    // if (this.state.FavouriteMovies) {
+    //     FavouriteMovieList = movies.filter((movie) =>
+    //       this.state.FavouriteMovies.includes(movie._id)
+    //     );
+    // }
     
     return (
       <div>
@@ -76,7 +75,7 @@ export class ProfileView extends React.Component {
               <Card.Text>Email: {this.state.Email}</Card.Text>
               <Card.Text>Birthday: {this.state.Birthday}</Card.Text>
               Favourite Movies:
-              {FavouriteMovieList.map((movie) => (
+              {/* {FavouriteMovieList.map((movie) => (
                 <div key={movie.movie_id} className="fav-movies-button">
                   <Link to={`/movies/${movie._id}`}>
                     <Button variant="link">{movie.Title}</Button>
@@ -94,10 +93,10 @@ export class ProfileView extends React.Component {
                     Add Favourite
                   </Button>
                 </div>
-              ))}
+              ))} */}
               <br />
               <br />
-              <Link to={'/user/update'}>
+              <Link to={'/users/:userName/update'}>
                 <Button variant="primary">Update Profile</Button>
                 <br />
                 <br />

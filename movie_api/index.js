@@ -227,7 +227,7 @@ app.delete('/users/:Username', (req, res) => {
     });
 });
 
-// Add a movie to a user's list of favorites
+// Add a movie to a user's list of favourites
 app.post('/users/:name/movies/:_id', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.name }, {
      $push: { FavouriteMovies: req.params._id }

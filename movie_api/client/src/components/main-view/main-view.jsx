@@ -11,6 +11,7 @@ import { RegistrationView } from "../registration-view/registration-view";
 import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
 import { ProfileView } from "../profile-view/profile-view";
+import { UpdateProfile } from "../update-profile/update-profile";
 import Button from 'react-bootstrap/Button';
 
 export class MainView extends React.Component {
@@ -82,6 +83,7 @@ export class MainView extends React.Component {
 
   render() {
     const { movies, selectedMovie, user, register } = this.state;
+    console.log("mainview", this.state);
 
     if (register) { 
       return (
@@ -166,7 +168,7 @@ export class MainView extends React.Component {
             exact path="/user/:userName"
             render={() => <ProfileView movies={movies} />}
           />
-          <Route path="/user/update" render={() => <UpdateProfile />} />
+          <Route path="/users/:userName/update" render={() => <UpdateProfile />} />
           {/* <Link to={'/user/:userName'}>
             <Button variant="link">View Profile</Button>
           </Link>"/user/update" render={() => <UpdateProfile />} /> */}
