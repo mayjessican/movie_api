@@ -19,7 +19,7 @@ export class ProfileView extends React.Component {
       Password: null,
       Email: null,
       Birthday: null,
-      FavouriteMovies: [],
+      FavoriteMovies: [],
       Movies: [],
     };
   }
@@ -36,7 +36,7 @@ export class ProfileView extends React.Component {
     console.log('token', token);
 
     axios
-      .get(`https://helloworld-test-1234.herokuapp.com/users/${username}`, {
+      .get(`https://helloworld-test-1234.herokuapp.com/users/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -46,7 +46,7 @@ export class ProfileView extends React.Component {
           Password: res.data.Password,
           Email: res.data.Email,
           Birthday: res.data.Birthday,
-          FavouriteMovies: res.data.FavouriteMovies, 
+          FavoriteMovies: res.data.FavoriteMovies || [], 
         });
       })
       .catch(function (err) {
@@ -54,7 +54,7 @@ export class ProfileView extends React.Component {
       });
   }
 
-  deleteFavouriteMovie(movieId) {
+  deleteFavoriteMovie(movieId) {
     console.log(this.props.movies);
     axios
       .delete(
@@ -66,7 +66,7 @@ export class ProfileView extends React.Component {
         }
       )
       .then((res) => {
-        alert('Removed movie from favourites');
+        alert('Removed movie from favorites');
       })
       .catch((e) => {
         alert('error removing movie' + e);
@@ -93,12 +93,10 @@ export class ProfileView extends React.Component {
 
   render() {
     const { movies } = this.props;
+    const FavoriteMovieList = movies.filter((movie) =>
+      this.state.FavoriteMovies.includes(movie._id)
+    );
     console.log("ProfileView", this.state)
-    // if (this.state.FavouriteMovies) {
-    //     FavouriteMovieList = movies.filter((movie) =>
-    //       this.state.FavouriteMovies.includes(movie._id)
-    //     );
-    // }
     
     return (
       <div>
@@ -111,19 +109,19 @@ export class ProfileView extends React.Component {
               <Card.Text>Password: xxx</Card.Text>
               <Card.Text>Email: {this.state.Email}</Card.Text>
               <Card.Text>Birthday: {this.state.Birthday}</Card.Text>
-              Favourite Movies:
-              {/* {favouriteMovieList.map((movie) => (
+              Favorite Movies:
+              {FavoriteMovieList.map((movie) => (
                 <div key={movie._id} className='fav-movies-button'>
                   <Link to={`/movies/${movie._id}`}>
                     <Button variant='link'>{movie.Title}</Button>
                   </Link>
                   <Button
                     variant='dark'
-                    onClick={(e) => this.deleteFavouriteMovie(movie._id)} >
-                    Remove Favourite
+                    onClick={(e) => this.deleteFavoriteMovies(movie._id)} >
+                    Remove Favorite
                   </Button>
                 </div>
-              ))} */}
+              ))}
               <br />
               <br />
               <Link to={'/users/:userName/update'}>

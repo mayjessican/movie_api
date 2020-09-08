@@ -38,7 +38,7 @@ app.use(morgan("common"));
 app.use(bodyParser.json());
 let auth = require('./auth')(app);
 
-let favourite = [];
+let favorite = [];
 let movies = [];
 
 app.use((err, req, res, next) => {
@@ -227,10 +227,10 @@ app.delete('/users/:Username', (req, res) => {
     });
 });
 
-// Add a movie to a user's list of favourites
+// Add a movie to a user's list of favorites
 app.post('/users/:name/movies/:_id', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.name }, {
-     $push: { FavouriteMovies: req.params._id }
+     $push: { FavoriteMovies: req.params._id }
    },
    { new: true }, // This line makes sure that the updated document is returned
   (err, updatedUser) => {
@@ -243,12 +243,12 @@ app.post('/users/:name/movies/:_id', (req, res) => {
   });
 });
 
-//Deletes a movie from user favourites
+//Deletes a movie from user favorites
 app.delete('/users/:name/movies/:_id', (req, res) => {
   let movie_id = req.params._id;
   let userName = req.params.name;
   if (userName) {
-    delete favourite[favourite.indexOf(movie_id)]
+    delete favorite[favorite.indexOf(movie_id)]
     res.status(200).send('Movie ' + req.params.movie_id + ' was deleted.');
   } else {
     res.status(404).send('Movie ' + req.params.movie_id + ' was not found.')

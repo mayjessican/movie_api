@@ -32,7 +32,7 @@ export function UpdateProfile(props) {
         })
         .catch(e => {
         console.log('error updating the user');
-        alert('This movie has been added to your Favourites.');
+        alert(' Your profile has been updated.');
         });
         }
 
