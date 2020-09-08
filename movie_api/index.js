@@ -30,7 +30,7 @@ app.use(cors({
 
 const { check, validationResult } = require('express-validator');
 
-mongoose.connect( "mongodb+srv://mayjessican:Morena91@myflixdb.miyru.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( "mongodb+srv://mayjessican:Morena91!@myflixdb.miyru.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
 
 //Middleware
 app.use(express.static('public/documentation.html'));
@@ -197,7 +197,8 @@ app.put('/users/:Username', (req, res) => {
       Username: req.body.Username,
       Password: req.body.Password,
       Email: req.body.Email,
-      Birthday: req.body.Birthday
+      Birthday: req.body.Birthday,
+      FavoriteMovies: req.body.FavoriteMovies
     }
   },
   { new: true }, // This line makes sure that the updated document is returned

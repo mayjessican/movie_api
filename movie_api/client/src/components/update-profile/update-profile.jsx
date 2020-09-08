@@ -11,7 +11,7 @@ export function UpdateProfile(props) {
     const [Username, updateUsername] = useState('');
     const [Password, updatePassword] = useState('');
     const [Email, updateEmail] = useState('');
-    const [Dob, updateDob] = useState('');
+    const [Birthday, updateBirthday] = useState('');
 
     const handleUpdate = (e) => {
         e.preventDefault();
@@ -22,7 +22,7 @@ export function UpdateProfile(props) {
         Username: Username,
         Password: Password,
         Email: Email,
-        Birthday: Dob
+        Birthday: Birthday
         }, { headers: { Authorization: `Bearer ${token}` } }
         ).then(response => {
         const data = response.data;
@@ -69,13 +69,13 @@ export function UpdateProfile(props) {
                 We will never share your information with anyone
             </Form.Text>
             </Form.Group>
-            <Form.Group controlId="formBasicDob">
+            <Form.Group controlId="formBasicBirthday">
             <Form.Label>Birthday</Form.Label>
             <Form.Control
                 type="date"
                 placeholder="12/31/1999"
-                value={Dob}
-                onChange={(e) => updateDob(e.target.value)}
+                value={Birthday}
+                onChange={(e) => updateBirthday(e.target.value)}
             />
             </Form.Group>
             <Button variant="primary" type="submit" onClick={handleUpdate}>

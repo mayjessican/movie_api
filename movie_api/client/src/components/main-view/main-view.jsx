@@ -53,12 +53,15 @@ export class MainView extends React.Component {
     localStorage.setItem("user", authData.user.Username);
     this.getMovies(authData.token);
 
-    // Why you set it above and you remove it herE?
-    // That's why we can not get it in the profie view
-    //OK, that was shown for me to do in the lesson, which is why I did it
-    // it's used only when you want to delete a user, not now
-    /* localStorage.removeItem("token");
-    localStorage.removeItem("user"); */
+  }
+
+  onLoggedOut(authData) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.setState({
+      user: null,
+    });
+    window.open('/client', '_self');
   }
 
   getMovies(token) {
@@ -82,7 +85,7 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, selectedMovie, user, register } = this.state;
+    const { movies, user, register } = this.state;
     console.log("mainview", this.state);
 
     if (register) { 
@@ -172,9 +175,9 @@ export class MainView extends React.Component {
           {/* <Link to={'/user/:userName'}>
             <Button variant="link">View Profile</Button>
           </Link>"/user/update" render={() => <UpdateProfile />} /> */}
-                {/* <Button size="sm" onClick={() => this.onLoggedOut()}>
-                <b>Log Out</b>
-              </Button> */}
+          <Button size="sm" onClick={() => this.onLoggedOut()}>
+          <b>Log Out</b>
+          </Button>
        </div>
       </Router>
     );

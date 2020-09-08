@@ -12,7 +12,7 @@ export function RegistrationView(props) {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
-	const [birthday, setDob] = useState("");
+	const [birthday, setBirthday] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,13 +66,13 @@ export function RegistrationView(props) {
             We will never share your information with anyone
           </Form.Text>
         </Form.Group>
-        <Form.Group controlId="formBasicDob">
+        <Form.Group controlId="formBasicBirthday">
           <Form.Label>Birthday</Form.Label>
           <Form.Control
             type="date"
             placeholder="12/31/1999"
             value={birthday}
-            onChange={(e) => setDob(e.target.value)}
+            onChange={(e) => setBirthday(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formBasicCheckbox">

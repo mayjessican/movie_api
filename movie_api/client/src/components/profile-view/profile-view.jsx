@@ -7,9 +7,7 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
  
-//start here  
 export class ProfileView extends React.Component {
   constructor(props) {
     super(props);
@@ -32,26 +30,23 @@ export class ProfileView extends React.Component {
 
   getUser(token) {
     const username = localStorage.getItem('user');
+    const user = localStorage.getItem('user');
     console.log('username', username);
     console.log('token', token);
 
     axios
       .get(`https://helloworld-test-1234.herokuapp.com/users/${username}`, {
         headers: { Authorization: `Bearer ${token}` },
-      })
+      }) //get user info first
       .then((res) => {
-        console.log('res', res); 
         this.setState({
           Username: res.data.Username,
           Password: res.data.Password,
           Email: res.data.Email,
           Birthday: res.data.Birthday,
-          FavoriteMovies: res.data.FavoriteMovies || [], 
+          FavoriteMovies: res.data.FavoriteMovies,
         });
       })
-      .catch(function (err) {
-        console.log(err);
-      });
   }
 
   deleteFavoriteMovie(movieId) {
@@ -128,6 +123,9 @@ export class ProfileView extends React.Component {
                 <Button variant="primary">Update Profile</Button>
                 <br />
                 <br />
+                <Button variant='dark' onClick={() => this.deleteUser()}>
+                Delete User
+              </Button>
               </Link>
               <br />
               <br />

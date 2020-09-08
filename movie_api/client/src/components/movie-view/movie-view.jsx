@@ -14,21 +14,50 @@ export class MovieView extends React.Component {
     this.state = {};
   }
 
-  addToFavorites(movies) {
+  // addToFavorites(movie) {
+  //   const token = localStorage.getItem('token');
+  //   const user = localStorage.getItem('user');
+  //   axios.put(`https://helloworld-test-1234.herokuapp.com/users/${username}`, { 
+  //     username: localStorage.getItem('user'),
+  //     NewFavoriteMovies: movie,}, 
+  //   {headers: { Authorization: `Bearer ${token}` },
+  //   }).then((res) => {
+  //     console.log(res, movie);
+  //     alert('This movie has been added to your Favorites.');
+  //   });
+  // }
+
+  addToFavorites(movie) {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
-    axios.put(`https://helloworld-test-1234.herokuapp.com/users/${user}`, { 
-      username: localStorage.getItem('user'),
-      NewFavoriteMovies: movie }, 
-    {headers: { Authorization: `Bearer ${token}` },
-    }).then((res) => {
-      console.log(res);
-      alert('This movie has been added to your Favorites.');
-    });
+    axios
+      .get(`https://helloworld-test-1234.herokuapp.com/users/${user}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }) // get the user info first
+      .then((res) => {
+        // then update her info with FavoriteMovies
+        console.log('response', res);
+        const ExistingFavoriteMovies = res.data.FavoriteMovies || [];
+        ExistingFavoriteMovies.push(movie);
+        axios.put(`https://helloworld-test-1234.herokuapp.com/users/${user}`, {
+          Username: res.data.Username,
+          Password: res.data.Password,
+          Email: res.data.Email,
+          Birthday: res.data.Birthday,
+          FavoriteMovies: ExistingFavoriteMovies,
+        },
+        { headers: { Authorization: `Bearer ${token}` } })
+      })
+      .then(() => {
+        console.log('Success');
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
   }
 
   render() {
-    const { movie, onClick } = this.props;
+    const { movie } = this.props;
 
     if (!movie) return null;
 
