@@ -36,7 +36,7 @@ export class ProfileView extends React.Component {
     console.log('token', token);
 
     axios
-      .get(`https://helloworld-test-1234.herokuapp.com/users/${user}`, {
+      .get(`https://helloworld-test-1234.herokuapp.com/users/${username}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
