@@ -1,14 +1,14 @@
-import React, { useState} from 'react';
+import React, { useState } from "react";
 //Routing
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import axios from "axios";
+import { Link } from "react-router-dom";
+import serverUrl from "../../helpers";
 
 //Styling
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Card from 'react-bootstrap/Card';
-import serverUrl from '../../helpers';
- 
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Card from "react-bootstrap/Card";
+
 export class ProfileView extends React.Component {
   constructor(props) {
     super(props);
@@ -25,15 +25,15 @@ export class ProfileView extends React.Component {
 
   componentDidMount() {
     //authentication
-    const accessToken = localStorage.getItem('token');
+    const accessToken = localStorage.getItem("token");
     this.getUser(accessToken);
   }
 
   getUser(token) {
-    const username = localStorage.getItem('user');
-    const user = localStorage.getItem('user');
-    console.log('username', username);
-    console.log('token', token);
+    const username = localStorage.getItem("user");
+    const user = localStorage.getItem("user");
+    console.log("username", username);
+    console.log("token", token);
 
     axios
       .get(`${serverUrl}/users/${username}`, {
@@ -47,19 +47,19 @@ export class ProfileView extends React.Component {
           Birthday: res.data.Birthday,
           FavoriteMovies: res.data.FavoriteMovies,
         });
-      })
+      });
   }
 
   removeFromFavorites(movie) {
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
-    console.log('movie', movie); 
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    console.log("movie", movie);
     axios
       .delete(`${serverUrl}/users/${user}/movies/${movie}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log('Remove Success', res);
+        console.log("Remove Success", res);
         // remove it from the current state
         const currentFavoriteMovies = this.state.FavoriteMovies;
         delete currentFavoriteMovies[currentFavoriteMovies.indexOf(movie)];
@@ -74,19 +74,16 @@ export class ProfileView extends React.Component {
 
   deleteUser(e) {
     axios
-      .delete(
-        `${serverUrl}/users/${localStorage.getItem('user')}`,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        }
-      )
+      .delete(`${serverUrl}/users/${localStorage.getItem("user")}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
       .then((response) => {
-        alert('Account deleted');
-        localStorage.removeItem('token', 'user');
-        window.open('/');
+        alert("Account deleted");
+        localStorage.removeItem("token", "user");
+        window.open("/");
       })
       .catch((event) => {
-        alert('failed to delete user');
+        alert("failed to delete user");
       });
   }
 
@@ -95,8 +92,8 @@ export class ProfileView extends React.Component {
     const FavoriteMovieList = movies.filter((movie) =>
       this.state.FavoriteMovies.includes(movie._id)
     );
-    console.log("ProfileView", this.state)
-    
+    console.log("ProfileView", this.state);
+
     return (
       <div>
         <Container>
@@ -110,28 +107,29 @@ export class ProfileView extends React.Component {
               <Card.Text>Birthday: {this.state.Birthday}</Card.Text>
               Favorite Movies:
               {FavoriteMovieList.map((movie) => (
-                <div key={movie._id} className='fav-movies-button'>
+                <div key={movie._id} className="fav-movies-button">
                   <Link to={`/movies/${movie._id}`}>
-                    <Button variant='link'>{movie.Title}</Button>
+                    <Button variant="link">{movie.Title}</Button>
                   </Link>
-                  <br>
-                  </br>
-                  <Button size="sm"
-                    variant='dark'
-                    onClick={(e) => this.removeFromFavorites(movie._id)} >
+                  <br></br>
+                  <Button
+                    size="sm"
+                    variant="dark"
+                    onClick={(e) => this.removeFromFavorites(movie._id)}
+                  >
                     Remove Favorite
                   </Button>
                 </div>
               ))}
               <br />
               <br />
-              <Link to={'/users/:userName/update'}>
+              <Link to={"/users/:userName/update"}>
                 <Button variant="primary">Update Profile</Button>
                 <br />
                 <br />
-                <Button variant='dark' onClick={() => this.deleteUser()}>
-                Delete User
-              </Button>
+                <Button variant="dark" onClick={() => this.deleteUser()}>
+                  Delete User
+                </Button>
               </Link>
               <br />
               <br />
@@ -141,6 +139,6 @@ export class ProfileView extends React.Component {
         </Container>
       </div>
     );
-    console.log('response', res);
+    console.log("response", res);
   }
 }

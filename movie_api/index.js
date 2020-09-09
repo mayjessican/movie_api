@@ -161,12 +161,12 @@ app.post('/users',
             res.status(500).send('Error: ' + error);
           });
       }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
-    });
-});
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+      });
+      });
 
 // Get a user by username
 app.get('/users/:Username', (req, res) => {
@@ -181,16 +181,6 @@ app.get('/users/:Username', (req, res) => {
 });
 
 // Update a user's info, by username
-/* We’ll expect JSON in this format
-{
-  Username: String,
-  (required)
-  Password: String,
-  (required)
-  Email: String,
-  (required)
-  Birthday: Date
-}*/
 app.put('/users/:Username', (req, res) => {
   console.log('updating user', req.params);
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
@@ -199,7 +189,6 @@ app.put('/users/:Username', (req, res) => {
       Password: req.body.Password,
       Email: req.body.Email,
       Birthday: req.body.Birthday,
-      // FavoriteMovies: req.body.FavoriteMovies
     }
   },
   { new: true }, // This line makes sure that the updated document is returned
@@ -247,7 +236,6 @@ app.post('/users/:name/movies/:_id', (req, res) => {
 
 //Deletes a movie from user favorites
 app.delete('/users/:name/movies/:movie_id', (req, res) => {
-  // let movie_id = req.params.movie_id;
   const userName = req.params.name;
   if (userName) {
     delete favorite[favorite.indexOf(req.params.movie_id)];

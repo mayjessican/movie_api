@@ -1,9 +1,9 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import React from "react";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 
-import { Link } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
+import { Link } from "react-router-dom";
+import Container from "react-bootstrap/Container";
 
 export class DirectorView extends React.Component {
   constructor() {
@@ -20,7 +20,7 @@ export class DirectorView extends React.Component {
     return (
       <div className="director-view">
         <Container>
-          <Card style={{ width: '25rem' }}>
+          <Card style={{ width: "25rem" }}>
             <Card.Body>
               <Card.Title>{director.Name}</Card.Title>
               <Card.Text>Director Bio: {director.Bio}</Card.Text>

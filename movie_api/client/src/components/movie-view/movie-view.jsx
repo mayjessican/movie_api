@@ -3,10 +3,10 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { MainView } from "../main-view/main-view";
 import { Link } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 import axios from "axios";
-import serverUrl from '../../helpers';
-import './movie-view.scss';
+import serverUrl from "../../helpers";
+import "./movie-view.scss";
 
 export class MovieView extends React.Component {
   constructor() {
@@ -16,14 +16,15 @@ export class MovieView extends React.Component {
   }
 
   addToFavorites(movie) {
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
     axios
       .post(`${serverUrl}/users/${user}/movies/${movie._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {
-        console.log('Add Success');
+        console.log("Add Success");
+        alert('This movie has been added to your Favorites.');
       })
       .catch(function (err) {
         console.log(err);
@@ -31,20 +32,19 @@ export class MovieView extends React.Component {
   }
 
   removeFromFavorites(movie) {
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
     axios
       .delete(`${serverUrl}/users/${user}/movies/${movie._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {
-        console.log('Remove Success');
+        console.log("Remove Success");
       })
       .catch(function (err) {
         console.log(err);
       });
   }
-
 
   render() {
     const { movie } = this.props;
@@ -54,7 +54,7 @@ export class MovieView extends React.Component {
     return (
       <div>
         <div className="movie-view">
-          <img className="movie-poster"  src={movie.ImageURL} />
+          <img className="movie-poster" src={movie.ImageURL} />
           <div className="movie-title">
             <span className="label">Title: </span>
             <span className="value">{movie.Title}</span>
@@ -80,10 +80,16 @@ export class MovieView extends React.Component {
           </div>
         </div>
         <div>
-        <Link to={`/`}>
-          <Button variant="link">Back</Button>
-        </Link>
-        <Button variant="link" onClick={() => this.addToFavorites(movie)} className="movie-card-fav">Add favorite!</Button>
+          <Link to={`/`}>
+            <Button variant="link">Back</Button>
+          </Link>
+          <Button
+            variant="link"
+            onClick={() => this.addToFavorites(movie)}
+            className="movie-card-fav"
+          >
+            Add favorite!
+          </Button>
         </div>
       </div>
     );

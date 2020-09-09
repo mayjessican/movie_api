@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav } from "react-bootstrap";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -13,7 +13,7 @@ import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
 import { ProfileView } from "../profile-view/profile-view";
 import { UpdateProfile } from "../update-profile/update-profile";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 import serverUrl from "../../helpers";
 
 export class MainView extends React.Component {
@@ -27,13 +27,6 @@ export class MainView extends React.Component {
       user: null,
     };
   }
-
-  // One of the "hooks" available in a React Component
-  // onLoggedIn(user) {
-  //   this.setState({
-  //     user
-  //   });
-  // }
 
   componentDidMount() {
     let accessToken = localStorage.getItem("token");
@@ -54,16 +47,15 @@ export class MainView extends React.Component {
     localStorage.setItem("token", authData.token);
     localStorage.setItem("user", authData.user.Username);
     this.getMovies(authData.token);
-
   }
 
   onLoggedOut(authData) {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     this.setState({
       user: null,
     });
-    window.open('/', '_self');
+    window.open("/", "_self");
   }
 
   getMovies(token) {
@@ -83,14 +75,14 @@ export class MainView extends React.Component {
   }
 
   register(registering) {
-    this.setState({ register: registering }); 
+    this.setState({ register: registering });
   }
 
   render() {
     const { movies, user, register } = this.state;
     console.log("mainview", this.state);
 
-    if (register) { 
+    if (register) {
       return (
         <RegistrationView
           onClick={() => this.alreadyMember()}
@@ -100,22 +92,15 @@ export class MainView extends React.Component {
       );
     }
 
-    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} onRegister={(registering) => this.register(registering)} />;
-    
-    // Before the movies have been loaded
-    // if (!movies) return <div className="main-view"/>;
-    // return (
-    //  <div className="main-view">
-    //   {selectedMovie ? <MovieView movie={selectedMovie} onClick={ movie => this.onMovieClick(movie) }/>
-    //      : movies.map(movie => (
-    //        <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
-    //        //<MovieView key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
-    //      ))
-    //   }
-    //  </div>
-    // );
+    if (!user)
+      return (
+        <LoginView
+          onLoggedIn={(user) => this.onLoggedIn(user)}
+          onRegister={(registering) => this.register(registering)}
+        />
+      );
 
-    if (!movies) return <div className="main-view"/>; 
+    if (!movies) return <div className="main-view" />;
 
     return (
       <Router>
@@ -123,27 +108,28 @@ export class MainView extends React.Component {
           <Link to={`/user/${user}`}>
             <Button variant="link">View Profile</Button>
           </Link>
-          <Navbar className='fixed-top' bg='dark' variant='dark'>
-              <Nav className='mr-auto'>
-                <Nav.Link as={Link} to='/'>
-                  Home
-                </Nav.Link>
-                <Nav.Link as={Link} to={`/user/${user}`}>
-                  Profile
-                </Nav.Link>
-                <Nav.Link onClick={() => this.onLoggedOut()}>LogOut</Nav.Link>
-              </Nav>
-            </Navbar>
-            <br></br>
-            <br></br>
+          <Navbar className="fixed-top" bg="dark" variant="dark">
+            <Nav className="mr-auto">
+              <Nav.Link as={Link} to="/">
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to={`/user/${user}`}>
+                Profile
+              </Nav.Link>
+              <Nav.Link onClick={() => this.onLoggedOut()}>LogOut</Nav.Link>
+            </Nav>
+          </Navbar>
+          <br></br>
+          <br></br>
           <Route
-            exact path="/"
+            exact
+            path="/"
             render={() => {
               if (!user)
                 return (
                   <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                 );
-              return movies.map((m) => <MovieCard key={m._id} movie={m} />); 
+              return movies.map((m) => <MovieCard key={m._id} movie={m} />);
             }}
           />
 
@@ -158,7 +144,7 @@ export class MainView extends React.Component {
           <Route
             path="/directors/:name"
             render={({ match }) => {
-              if (!movies) return <div className="main-view"/>;
+              if (!movies) return <div className="main-view" />;
               return (
                 <DirectorView
                   director={
@@ -170,7 +156,8 @@ export class MainView extends React.Component {
             }}
           />
           <Route
-            exact path="/genres/:name"
+            exact
+            path="/genres/:name"
             render={({ match }) => {
               if (!movies) return <div className="main-view" />;
               return (
@@ -183,17 +170,15 @@ export class MainView extends React.Component {
             }}
           />
           <Route
-            exact path="/user/:userName"
+            exact
+            path="/user/:userName"
             render={() => <ProfileView movies={movies} />}
           />
-          <Route path="/users/:userName/update" render={() => <UpdateProfile />} />
-          {/* <Link to={'/user/:userName'}>
-            <Button variant="link">View Profile</Button>
-          </Link>"/user/update" render={() => <UpdateProfile />} /> */}
-          {/* <Button size="sm" onClick={() => this.onLoggedOut()}>
-          <b>Log Out</b>
-          </Button> */}
-       </div>
+          <Route
+            path="/users/:userName/update"
+            render={() => <UpdateProfile />}
+          />
+        </div>
       </Router>
     );
   }

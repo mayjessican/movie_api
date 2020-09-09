@@ -1,38 +1,39 @@
 import React, { useState } from "react";
 //Routing
 import axios from "axios";
-//import { Link } from "react-router-dom";
+
 //Styling
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
-import serverUrl from '../../helpers';
+import serverUrl from "../../helpers";
 
 export function RegistrationView(props) {
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
-	const [email, setEmail] = useState("");
-	const [birthday, setBirthday] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthday, setBirthday] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post(`${serverUrl}/users`, {
-      Username: username,
-      Password: password,
-      Email: email,
-      Birthday: birthday
-    })
-    .then(response => {
-      const data = response.data;
-      console.log(data);
-      window.open('/', '_self');
-    })
-    .catch(e => {
-      console.log('error registering the user')
-    });
-  }
+    axios
+      .post(`${serverUrl}/users`, {
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthday: birthday,
+      })
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        window.open("/", "_self");
+      })
+      .catch((e) => {
+        console.log("error registering the user");
+      });
+  };
 
   return (
     <Container style={{ width: "42rem" }}>
@@ -85,10 +86,10 @@ export function RegistrationView(props) {
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Register
         </Button>{" "}
-        {/* <Link to={"/login"}>
-          <Button>Go to Login</Button>
-        </Link> */}
-        <Button variant='dark link' type="submit" onClick={() => props.onRegister(false) }>
+        <Button
+          variant="dark link"
+          type="submit"
+          onClick={() => props.onRegister(false)}>
           Login
         </Button>
       </Form>
