@@ -14,14 +14,14 @@ const Users = Models.User;
 const cors = require('cors');
 app.use(cors());
 
-var allowedOrigins = ['http://localhost:1234', '*'];
+let allowedOrigins = ['http://localhost:1234', '*'];
 //CORS 
 //implementation 
 app.use(cors({
-	origin: function(origin, callback){
+	origin: (origin, callback) => {
 	  if(!origin) return callback(null, true);
 	  if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-		  var message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+		  let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
 		  return callback(new Error(message ), false);
 	  }
 	  return callback(null, true);
@@ -30,7 +30,7 @@ app.use(cors({
 
 const { check, validationResult } = require('express-validator');
 
-mongoose.connect( "mongodb+srv://mayjessican:Morena91!@myflixdb.miyru.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( "mongodb+srv://mayjessican:Morena91@myflixdb.miyru.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
 
 //Middleware
 app.use(express.static('public/documentation.html'));
@@ -48,7 +48,7 @@ app.use((err, req, res, next) => {
 
 // GET requests
 app.get('/', (req, res) => {
-  res.send('Welcome to myFlix!');
+  res.send('Welcome to myFlix 09/09/2020!');
 });
 
 // Gets documentation
@@ -192,13 +192,14 @@ app.get('/users/:Username', (req, res) => {
   Birthday: Date
 }*/
 app.put('/users/:Username', (req, res) => {
+  console.log('updating user', req.params);
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
       Username: req.body.Username,
       Password: req.body.Password,
       Email: req.body.Email,
       Birthday: req.body.Birthday,
-      FavoriteMovies: req.body.FavoriteMovies
+      // FavoriteMovies: req.body.FavoriteMovies
     }
   },
   { new: true }, // This line makes sure that the updated document is returned
@@ -230,26 +231,39 @@ app.delete('/users/:Username', (req, res) => {
 
 // Add a movie to a user's list of favorites
 app.post('/users/:name/movies/:_id', (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.name }, {
-     $push: { FavoriteMovies: req.params._id }
-   },
-   { new: true }, // This line makes sure that the updated document is returned
-  (err, updatedUser) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    } else {
-    res.json(updatedUser);
-    }
-  });
+  Users.findOneAndUpdate(
+    { Username: req.params.name },
+    { $push: { FavoriteMovies: req.params._id }},
+    { new: true }, // This line makes sure that the updated document is returned
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+      res.json(updatedUser);
+      }
+    });
 });
 
 //Deletes a movie from user favorites
-app.delete('/users/:name/movies/:_id', (req, res) => {
-  let movie_id = req.params._id;
-  let userName = req.params.name;
+app.delete('/users/:name/movies/:movie_id', (req, res) => {
+  // let movie_id = req.params.movie_id;
+  const userName = req.params.name;
   if (userName) {
-    delete favorite[favorite.indexOf(movie_id)]
+    delete favorite[favorite.indexOf(req.params.movie_id)];
+      Users.findOneAndUpdate(
+      { Username: req.params.name },
+      { $pull: { FavoriteMovies: req.params.movie_id }},
+      { new: true }, // This line makes sure that the updated document is returned
+      (err, updatedUser) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error: ' + err);
+        } else {
+          console.log('success', updatedUser);
+        }
+      });
+
     res.status(200).send('Movie ' + req.params.movie_id + ' was deleted.');
   } else {
     res.status(404).send('Movie ' + req.params.movie_id + ' was not found.')

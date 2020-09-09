@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
+import serverUrl from '../../helpers';
  
 export class ProfileView extends React.Component {
   constructor(props) {
@@ -35,7 +36,7 @@ export class ProfileView extends React.Component {
     console.log('token', token);
 
     axios
-      .get(`https://helloworld-test-1234.herokuapp.com/users/${username}`, {
+      .get(`${serverUrl}/users/${username}`, {
         headers: { Authorization: `Bearer ${token}` },
       }) //get user info first
       .then((res) => {
@@ -49,29 +50,32 @@ export class ProfileView extends React.Component {
       })
   }
 
-  deleteFavoriteMovie(movieId) {
-    console.log(this.props.movies);
+  removeFromFavorites(movie) {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    console.log('movie', movie); 
     axios
-      .delete(
-        `https://helloworld-test-1234.herokuapp.com/users/${localStorage.getItem(
-          'user'
-        )}/Movies/${movieId}`,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        }
-      )
-      .then((res) => {
-        alert('Removed movie from favorites');
+      .delete(`${serverUrl}/users/${user}/movies/${movie}`, {
+        headers: { Authorization: `Bearer ${token}` },
       })
-      .catch((e) => {
-        alert('error removing movie' + e);
+      .then((res) => {
+        console.log('Remove Success', res);
+        // remove it from the current state
+        const currentFavoriteMovies = this.state.FavoriteMovies;
+        delete currentFavoriteMovies[currentFavoriteMovies.indexOf(movie)];
+        this.setState({
+          FavoriteMovies: currentFavoriteMovies,
+        });
+      })
+      .catch(function (err) {
+        console.log(err);
       });
   }
 
   deleteUser(e) {
     axios
       .delete(
-        `https://helloworld-test-1234.herokuapp.com/users/${localStorage.getItem('user')}`,
+        `${serverUrl}/users/${localStorage.getItem('user')}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         }
@@ -110,9 +114,11 @@ export class ProfileView extends React.Component {
                   <Link to={`/movies/${movie._id}`}>
                     <Button variant='link'>{movie.Title}</Button>
                   </Link>
-                  <Button
+                  <br>
+                  </br>
+                  <Button size="sm"
                     variant='dark'
-                    onClick={(e) => this.deleteFavoriteMovies(movie._id)} >
+                    onClick={(e) => this.removeFromFavorites(movie._id)} >
                     Remove Favorite
                   </Button>
                 </div>
@@ -135,5 +141,6 @@ export class ProfileView extends React.Component {
         </Container>
       </div>
     );
+    console.log('response', res);
   }
 }

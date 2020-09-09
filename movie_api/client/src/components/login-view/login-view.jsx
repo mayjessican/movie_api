@@ -5,6 +5,7 @@ import axios from 'axios';
 import './login-view.scss'
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
+import serverUrl from '../../helpers';
 
 
 export function LoginView(props) {
@@ -15,7 +16,7 @@ export function LoginView(props) {
     e.preventDefault();
     console.log(username, password);
     /* Send a request to the server for authentication */
-    axios.post('https://helloworld-test-1234.herokuapp.com/login', {
+    axios.post(`${serverUrl}/login`, {
       Username: username,
       Password: password
     })

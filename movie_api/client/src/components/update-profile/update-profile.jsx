@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
+import serverUrl from '../../helpers';
 
 export function UpdateProfile(props) {
 
@@ -18,7 +19,7 @@ export function UpdateProfile(props) {
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
 
-        axios.put(`https://helloworld-test-1234.herokuapp.com/users/${user}`, {
+        axios.put(`${serverUrl}/users/${user}`, {
         Username: Username,
         Password: Password,
         Email: Email,

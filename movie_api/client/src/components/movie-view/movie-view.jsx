@@ -5,7 +5,8 @@ import { MainView } from "../main-view/main-view";
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
-
+import serverUrl from '../../helpers';
+import './movie-view.scss';
 
 export class MovieView extends React.Component {
   constructor() {
@@ -14,47 +15,36 @@ export class MovieView extends React.Component {
     this.state = {};
   }
 
-  // addToFavorites(movie) {
-  //   const token = localStorage.getItem('token');
-  //   const user = localStorage.getItem('user');
-  //   axios.put(`https://helloworld-test-1234.herokuapp.com/users/${username}`, { 
-  //     username: localStorage.getItem('user'),
-  //     NewFavoriteMovies: movie,}, 
-  //   {headers: { Authorization: `Bearer ${token}` },
-  //   }).then((res) => {
-  //     console.log(res, movie);
-  //     alert('This movie has been added to your Favorites.');
-  //   });
-  // }
-
   addToFavorites(movie) {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
     axios
-      .get(`https://helloworld-test-1234.herokuapp.com/users/${user}`, {
+      .post(`${serverUrl}/users/${user}/movies/${movie._id}`, {
         headers: { Authorization: `Bearer ${token}` },
-      }) // get the user info first
-      .then((res) => {
-        // then update her info with FavoriteMovies
-        console.log('response', res);
-        const ExistingFavoriteMovies = res.data.FavoriteMovies || [];
-        ExistingFavoriteMovies.push(movie);
-        axios.put(`https://helloworld-test-1234.herokuapp.com/users/${user}`, {
-          Username: res.data.Username,
-          Password: res.data.Password,
-          Email: res.data.Email,
-          Birthday: res.data.Birthday,
-          FavoriteMovies: ExistingFavoriteMovies,
-        },
-        { headers: { Authorization: `Bearer ${token}` } })
       })
       .then(() => {
-        console.log('Success');
+        console.log('Add Success');
       })
       .catch(function (err) {
         console.log(err);
       });
   }
+
+  removeFromFavorites(movie) {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    axios
+      .delete(`${serverUrl}/users/${user}/movies/${movie._id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => {
+        console.log('Remove Success');
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }
+
 
   render() {
     const { movie } = this.props;
@@ -64,7 +54,7 @@ export class MovieView extends React.Component {
     return (
       <div>
         <div className="movie-view">
-          <img className="movie-poster" src={movie.ImageURL} />
+          <img className="movie-poster"  src={movie.ImageURL} />
           <div className="movie-title">
             <span className="label">Title: </span>
             <span className="value">{movie.Title}</span>

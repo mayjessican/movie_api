@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Navbar, Nav } from 'react-bootstrap';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -13,6 +14,7 @@ import { GenreView } from "../genre-view/genre-view";
 import { ProfileView } from "../profile-view/profile-view";
 import { UpdateProfile } from "../update-profile/update-profile";
 import Button from 'react-bootstrap/Button';
+import serverUrl from "../../helpers";
 
 export class MainView extends React.Component {
   constructor() {
@@ -61,12 +63,12 @@ export class MainView extends React.Component {
     this.setState({
       user: null,
     });
-    window.open('/client', '_self');
+    window.open('/', '_self');
   }
 
   getMovies(token) {
     axios
-      .get("https://helloworld-test-1234.herokuapp.com/movies", {
+      .get(`${serverUrl}/movies`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -121,6 +123,19 @@ export class MainView extends React.Component {
           <Link to={`/user/${user}`}>
             <Button variant="link">View Profile</Button>
           </Link>
+          <Navbar className='fixed-top' bg='dark' variant='dark'>
+              <Nav className='mr-auto'>
+                <Nav.Link as={Link} to='/'>
+                  Home
+                </Nav.Link>
+                <Nav.Link as={Link} to={`/user/${user}`}>
+                  Profile
+                </Nav.Link>
+                <Nav.Link onClick={() => this.onLoggedOut()}>LogOut</Nav.Link>
+              </Nav>
+            </Navbar>
+            <br></br>
+            <br></br>
           <Route
             exact path="/"
             render={() => {
@@ -175,9 +190,9 @@ export class MainView extends React.Component {
           {/* <Link to={'/user/:userName'}>
             <Button variant="link">View Profile</Button>
           </Link>"/user/update" render={() => <UpdateProfile />} /> */}
-          <Button size="sm" onClick={() => this.onLoggedOut()}>
+          {/* <Button size="sm" onClick={() => this.onLoggedOut()}>
           <b>Log Out</b>
-          </Button>
+          </Button> */}
        </div>
       </Router>
     );

@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
+import serverUrl from '../../helpers';
 
 export function RegistrationView(props) {
 	const [username, setUsername] = useState("");
@@ -17,7 +18,7 @@ export function RegistrationView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post('https://helloworld-test-1234.herokuapp.com/users', {
+    axios.post(`${serverUrl}/users`, {
       Username: username,
       Password: password,
       Email: email,
