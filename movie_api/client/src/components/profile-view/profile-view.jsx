@@ -62,8 +62,7 @@ export class ProfileView extends React.Component {
           FavoriteMovies: currentFavoriteMovies,
         });
       })
-      .catch(function (err) {
-      });
+      .catch(function (err) {});
   }
 
   deleteUser(e) {

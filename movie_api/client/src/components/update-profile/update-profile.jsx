@@ -22,15 +22,14 @@ export function UpdateProfile(props) {
         headers: { Authorization: `Bearer ${token}` },
       }) //get user info first
       .then((res) => {
-        console.log('res in update-profile', res);
         updateUsername(res.data.Username);
         updateEmail(res.data.Email);
       });
   };
 
   useEffect(() => {
-      getUser();
-  }, []); 
+    getUser();
+  }, []);
 
   const handleUpdate = (e) => {
     e.preventDefault();

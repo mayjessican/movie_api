@@ -24,7 +24,6 @@ export function LoginView(props) {
         props.onLoggedIn(data);
       })
       .catch((e) => {
-        console.log('login error', e);
         alert("no such user");
       });
 

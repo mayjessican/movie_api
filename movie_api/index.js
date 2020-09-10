@@ -156,7 +156,7 @@ app.post(
       return res.status(422).json({ errors: errors.array() });
     }
     const hashedPassword = Users.hashPassword(req.body.Password);
-    Users.findOne({ Username: req.body.Username }) 
+    Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
           //If the user is found, send a response that it already exists
@@ -198,7 +198,7 @@ app.get("/users/:Username", (req, res) => {
 
 // Update a user's info, by username
 app.put("/users/:Username", (req, res) => {
-    const updateInfo = {
+  const updateInfo = {
     Username: req.body.Username,
     Email: req.body.Email,
   };
@@ -211,7 +211,7 @@ app.put("/users/:Username", (req, res) => {
   if (req.body.Birthday) {
     updateInfo.Birthday = req.body.Birthday;
   }
-  
+
   Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
@@ -290,5 +290,5 @@ app.delete("/users/:name/movies/:movie_id", (req, res) => {
 //app.listen(8080, function(){ console.log('Server listening on 8080...')});
 const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0", () => {
-  console.log('Listening on Port ' + port);
+  console.log("Listening on Port " + port);
 });
