@@ -31,9 +31,6 @@ export class ProfileView extends React.Component {
 
   getUser(token) {
     const username = localStorage.getItem("user");
-    const user = localStorage.getItem("user");
-    console.log("username", username);
-    console.log("token", token);
 
     axios
       .get(`${serverUrl}/users/${username}`, {
@@ -53,13 +50,11 @@ export class ProfileView extends React.Component {
   removeFromFavorites(movie) {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
-    console.log("movie", movie);
     axios
       .delete(`${serverUrl}/users/${user}/movies/${movie}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log("Remove Success", res);
         // remove it from the current state
         const currentFavoriteMovies = this.state.FavoriteMovies;
         delete currentFavoriteMovies[currentFavoriteMovies.indexOf(movie)];
@@ -68,7 +63,6 @@ export class ProfileView extends React.Component {
         });
       })
       .catch(function (err) {
-        console.log(err);
       });
   }
 
@@ -92,7 +86,6 @@ export class ProfileView extends React.Component {
     const FavoriteMovieList = movies.filter((movie) =>
       this.state.FavoriteMovies.includes(movie._id)
     );
-    console.log("ProfileView", this.state);
 
     return (
       <div>
@@ -139,6 +132,5 @@ export class ProfileView extends React.Component {
         </Container>
       </div>
     );
-    console.log("response", res);
   }
 }

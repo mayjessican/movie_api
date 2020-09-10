@@ -2,9 +2,16 @@ import React from "react";
 import axios from "axios";
 import { Navbar, Nav } from "react-bootstrap";
 
+//task 3.6
+//import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+import { setMovies } from '../../actions/actions';
+
+//task 3.6
+//import MoviesList from '../movies-list/movies-list';
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
@@ -15,6 +22,7 @@ import { ProfileView } from "../profile-view/profile-view";
 import { UpdateProfile } from "../update-profile/update-profile";
 import Button from "react-bootstrap/Button";
 import serverUrl from "../../helpers";
+import './main-view.scss';
 
 export class MainView extends React.Component {
   constructor() {
@@ -39,7 +47,6 @@ export class MainView extends React.Component {
   }
 
   onLoggedIn(authData) {
-    console.log(authData);
     this.setState({
       user: authData.user.Username,
     });
@@ -70,8 +77,16 @@ export class MainView extends React.Component {
         });
       })
       .catch(function (error) {
-        console.log(error);
       });
+    // for task 3.6
+    //   .then(response => {
+    //     // #1
+    //     this.props.setMovies(response.data);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+    // }
   }
 
   register(registering) {
@@ -80,7 +95,9 @@ export class MainView extends React.Component {
 
   render() {
     const { movies, user, register } = this.state;
-    console.log("mainview", this.state);
+    //for task 3.6
+    // let { movies } = this.props;
+    // let { user } = this.state;
 
     if (register) {
       return (
@@ -125,11 +142,19 @@ export class MainView extends React.Component {
             exact
             path="/"
             render={() => {
-              if (!user)
+              if (!user) {
                 return (
                   <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                 );
-              return movies.map((m) => <MovieCard key={m._id} movie={m} />);
+              }
+                
+              return (
+                <div className="movie-cards">
+                  {movies.map((m) => <MovieCard key={m._id} movie={m} />)}
+                </div>
+              ); // put cards inside a div to style them easier
+              // task 3.6
+              //return <MoviesList movies={movies}/>;
             }}
           />
 
@@ -183,3 +208,12 @@ export class MainView extends React.Component {
     );
   }
 }
+
+//task 3.6
+// #3
+// let mapStateToProps = state => {
+//   return { movies: state.movies }
+// }
+
+// #4
+// export default connect(mapStateToProps, { setMovies } )(MainView);

@@ -23,26 +23,9 @@ export class MovieView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {
-        console.log("Add Success");
         alert('This movie has been added to your Favorites.');
       })
       .catch(function (err) {
-        console.log(err);
-      });
-  }
-
-  removeFromFavorites(movie) {
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
-    axios
-      .delete(`${serverUrl}/users/${user}/movies/${movie._id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(() => {
-        console.log("Remove Success");
-      })
-      .catch(function (err) {
-        console.log(err);
       });
   }
 

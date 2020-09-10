@@ -20,7 +20,6 @@ http.createServer((request, response) => {
 
     fs.appendFile('log.txt', 'URL: ' + addr + '\nTimestamp: ' + new Date() + '\n\n', function (err) {
         if (err) {
-            console.log(err);
         } else {
             console.log('Added to log.');
         }

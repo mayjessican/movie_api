@@ -13,7 +13,6 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
     /* Send a request to the server for authentication */
     axios
       .post(`${serverUrl}/login`, {
@@ -25,7 +24,8 @@ export function LoginView(props) {
         props.onLoggedIn(data);
       })
       .catch((e) => {
-        console.log("no such user", e);
+        console.log('login error', e);
+        alert("no such user");
       });
 
   };

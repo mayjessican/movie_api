@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import { Link } from "react-router-dom";
@@ -13,11 +13,29 @@ export function UpdateProfile(props) {
   const [Email, updateEmail] = useState("");
   const [Birthday, updateBirthday] = useState("");
 
+  const getUser = () => {
+    const username = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
+
+    axios
+      .get(`${serverUrl}/users/${username}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }) //get user info first
+      .then((res) => {
+        console.log('res in update-profile', res);
+        updateUsername(res.data.Username);
+        updateEmail(res.data.Email);
+      });
+  };
+
+  useEffect(() => {
+      getUser();
+  }, []); 
+
   const handleUpdate = (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
-
     axios
       .put(
         `${serverUrl}/users/${user}`,
@@ -32,11 +50,9 @@ export function UpdateProfile(props) {
       .then((response) => {
         const data = response.data;
         localStorage.setItem("user", data.Username);
-        console.log(data);
         window.open("/", "_self");
       })
       .catch((e) => {
-        console.log("error updating the user");
         alert(" Your profile has been updated.");
       });
   };
@@ -48,8 +64,8 @@ export function UpdateProfile(props) {
           <Form.Label>Username</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Username"
             value={Username}
+            readOnly
             onChange={(e) => updateUsername(e.target.value)}
           />
         </Form.Group>
@@ -57,7 +73,6 @@ export function UpdateProfile(props) {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Password"
             value={Password}
             onChange={(e) => updatePassword(e.target.value)}
           />
@@ -66,7 +81,6 @@ export function UpdateProfile(props) {
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Enter email"
             value={Email}
             onChange={(e) => updateEmail(e.target.value)}
           />
@@ -78,7 +92,6 @@ export function UpdateProfile(props) {
           <Form.Label>Birthday</Form.Label>
           <Form.Control
             type="date"
-            placeholder="12/31/1999"
             value={Birthday}
             onChange={(e) => updateBirthday(e.target.value)}
           />
