@@ -2,18 +2,14 @@ import React from "react";
 import axios from "axios";
 import { Navbar, Nav } from "react-bootstrap";
 
-//task 3.6
-//import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import { setMovies } from "../../actions/actions";
-
-//task 3.6
-//import MoviesList from '../movies-list/movies-list';
+import { setMovies, setUser } from "../../actions/actions";
+import MoviesList from '../movies-list/movies-list';
 import { LoginView } from "../login-view/login-view";
-import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { RegistrationView } from "../registration-view/registration-view";
 import { DirectorView } from "../director-view/director-view";
@@ -24,7 +20,8 @@ import Button from "react-bootstrap/Button";
 import serverUrl from "../../helpers";
 import "./main-view.scss";
 
-export class MainView extends React.Component {
+//export class MainView extends React.Component {
+class MainView extends React.Component {
   constructor() {
     super();
 
@@ -71,32 +68,25 @@ export class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data,
-        });
+        this.props.setMovies(response.data);
       })
-      .catch(function (error) {});
-    // for task 3.6
-    //   .then(response => {
-    //     // #1
-    //     this.props.setMovies(response.data);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-    // }
-  }
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+        // Assign the result to the state
+        // this.setState({
+        //   movies: response.data,
+        // });
 
   register(registering) {
     this.setState({ register: registering });
   }
 
   render() {
-    const { movies, user, register } = this.state;
-    //for task 3.6
-    // let { movies } = this.props;
-    // let { user } = this.state;
+    const { register } = this.state;
+    let { movies } = this.props;
+    let { user } = this.state;
 
     if (register) {
       return (
@@ -119,7 +109,7 @@ export class MainView extends React.Component {
     if (!movies) return <div className="main-view" />;
 
     return (
-      <Router>
+      <Router basename="/client">
         <div className="main-view">
           <Link to={`/user/${user}`}>
             <Button variant="link">View Profile</Button>
@@ -146,16 +136,9 @@ export class MainView extends React.Component {
                   <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                 );
               }
+              
+              return <MoviesList movies={movies}/>;
 
-              return (
-                <div className="movie-cards">
-                  {movies.map((m) => (
-                    <MovieCard key={m._id} movie={m} />
-                  ))}
-                </div>
-              ); // put cards inside a div to style them easier
-              // task 3.6
-              //return <MoviesList movies={movies}/>;
             }}
           />
 
@@ -210,11 +193,28 @@ export class MainView extends React.Component {
   }
 }
 
-//task 3.6
-// #3
-// let mapStateToProps = state => {
-//   return { movies: state.movies }
-// }
+let mapStateToProps = state => {
+   return { movies: state.movies }
+ }
 
-// #4
-// export default connect(mapStateToProps, { setMovies } )(MainView);
+ export default connect(mapStateToProps, { setMovies, setUser } )(MainView);
+
+//  MainView.propTypes = {
+
+//   movies: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       Title: PropTypes.string,
+//       ImageUrl: PropTypes.string,
+//       Description: PropTypes.string,
+//       Genre: PropTypes.exact({
+//         _id: PropTypes.string,
+//         Name: PropTypes.string,
+//         Description: PropTypes.string
+//       }),
+//       Director: PropTypes.shape({
+//         Name: PropTypes.string
+//       })    
+//     })
+//   ),
+//   onToggleFavourite: PropTypes.func.isRequired
+// };

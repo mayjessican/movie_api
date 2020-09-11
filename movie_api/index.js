@@ -8,6 +8,7 @@ const Models = require("./models.js");
 const passport = require("passport");
 require("./passport");
 
+const path = require("path");
 const Movies = Models.Movie;
 const Users = Models.User;
 
@@ -41,6 +42,7 @@ mongoose.connect(
 
 //Middleware
 app.use(express.static("public/documentation.html"));
+app.use("/client", express.static(path.join(__dirname, "client", "dist")));
 app.use(morgan("common"));
 app.use(bodyParser.json());
 let auth = require("./auth")(app);
@@ -54,6 +56,10 @@ app.use((err, req, res, next) => {
 });
 
 // GET requests
+app.get("/client/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
+
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix 09/09/2020!");
 });
