@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+
 import { setMovies, setUser } from "../../actions/actions";
 import MoviesList from '../movies-list/movies-list';
 import { LoginView } from "../login-view/login-view";
@@ -21,7 +22,7 @@ import serverUrl from "../../helpers";
 import "./main-view.scss";
 
 //export class MainView extends React.Component {
-class MainView extends React.Component {
+export class MainView extends React.Component {
   constructor() {
     super();
 
