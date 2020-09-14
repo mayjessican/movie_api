@@ -1,5 +1,5 @@
 // mobile-first by default
-.movie-cards {
+.movies-list {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     justify-items: center;
@@ -7,19 +7,19 @@
 }
 
 @media only screen and (min-width: 500px) { // small screen
-    .movie-cards {
+    .movie-list {
         grid-template-columns: repeat(2, minmax(0, 1fr)); // 1 column
     }
 }
 
 @media only screen and (min-width: 800px) { // medium screen
-    .movie-cards {
+    .movie-list {
         grid-template-columns: repeat(3, minmax(0, 1fr)); // 1 column
     }
 }
 
 @media only screen and (min-width: 1200px) { // wide screen
-    .movie-cards {
+    .movie-list {
         grid-template-columns: repeat(5, minmax(0, 1fr)); // 1 column
     }
 }
