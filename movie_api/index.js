@@ -15,7 +15,7 @@ const Users = Models.User;
 const cors = require("cors");
 app.use(cors());
 
-let allowedOrigins = ["http://localhost:1234", "*"];
+let allowedOrigins = ["http://localhost:1234", "https://helloworld-test-1234.herokuapp.com", "https://jessflix-movie-1234.herokuapp.com", "*"];
 //CORS
 //implementation
 app.use(

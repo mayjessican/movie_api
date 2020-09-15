@@ -19,7 +19,7 @@ import { ProfileView } from "../profile-view/profile-view";
 import { UpdateProfile } from "../update-profile/update-profile";
 import Button from "react-bootstrap/Button";
 import serverUrl from "../../helpers";
-import "./main-view.scss";
+// import "./main-view.scss";
 
 //export class MainView extends React.Component {
 export class MainView extends React.Component {

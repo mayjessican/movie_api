@@ -21,11 +21,18 @@ function MoviesList(props) {
   }
 
   if (!movies) return <div className="main-view"/>;
-
-  return <div className="movies-list">
-      <VisibilityFilterInput visibilityFilter={visibilityFilter} />
-      {filteredMovies.map(m => <MovieCard key={m._id} movie={m}/>)}
-    </div>;
+  // that's what I meant yesterday, to move the VisibilityFilterInput outside of the movies-list div
+  // or you can do something like
+  return (
+    <div>
+      <div className="filter-wrapper">
+        <VisibilityFilterInput visibilityFilter={visibilityFilter} />
+      </div>
+      <div className="movies-list">
+        {filteredMovies.map(m => <MovieCard key={m._id} movie={m}/>)}
+      </div>
+    </div>
+  );
 }
 
 export default connect(mapStateToProps)(MoviesList);

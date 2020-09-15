@@ -10,9 +10,9 @@ import { Link } from "react-router-dom";
 export class MovieCard extends React.Component {
   render() {
     const { movie } = this.props;
+    // Should should not add movies-list class into the movie card, as it's a card, not a list
 
     return (
-      <div className="movies-list">
       <Card style={{ width: "16rem" }}>
         <Card.Img variant="top" src={movie.ImageURL} />
         <Card.Body>
@@ -29,7 +29,6 @@ export class MovieCard extends React.Component {
           </Link>
         </Card.Body>
       </Card>
-      </div>
     );
   }
 }
