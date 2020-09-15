@@ -19,7 +19,6 @@ import { ProfileView } from "../profile-view/profile-view";
 import { UpdateProfile } from "../update-profile/update-profile";
 import Button from "react-bootstrap/Button";
 import serverUrl from "../../helpers";
-// import "./main-view.scss";
 
 //export class MainView extends React.Component {
 export class MainView extends React.Component {
@@ -75,10 +74,6 @@ export class MainView extends React.Component {
         console.log(error);
       });
     }
-        // Assign the result to the state
-        // this.setState({
-        //   movies: response.data,
-        // });
 
   register(registering) {
     this.setState({ register: registering });
@@ -199,23 +194,3 @@ let mapStateToProps = state => {
  }
 
  export default connect(mapStateToProps, { setMovies, setUser } )(MainView);
-
-//  MainView.propTypes = {
-
-//   movies: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       Title: PropTypes.string,
-//       ImageUrl: PropTypes.string,
-//       Description: PropTypes.string,
-//       Genre: PropTypes.exact({
-//         _id: PropTypes.string,
-//         Name: PropTypes.string,
-//         Description: PropTypes.string
-//       }),
-//       Director: PropTypes.shape({
-//         Name: PropTypes.string
-//       })    
-//     })
-//   ),
-//   onToggleFavourite: PropTypes.func.isRequired
-// };

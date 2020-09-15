@@ -21,9 +21,7 @@ function MoviesList(props) {
   }
 
   if (!movies) return <div className="main-view"/>;
-  // that's what I meant yesterday, to move the VisibilityFilterInput outside of the movies-list div
-  // or you can do something like
-  return (
+   return (
     <div>
       <div className="filter-wrapper">
         <VisibilityFilterInput visibilityFilter={visibilityFilter} />

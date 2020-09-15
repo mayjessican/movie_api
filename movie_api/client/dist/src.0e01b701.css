@@ -1,2 +1,0 @@
-img{max-width:500px;height:auto}.movie-cards{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));justify-items:center;grid-row-gap:20px}@media only screen and (min-width:500px){.movie-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}@media only screen and (min-width:800px){.movie-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}@media only screen and (min-width:1200px){.movie-cards{grid-template-columns:repeat(5,minmax(0,1fr))}}.my-flix{color:#4682b4}
-/*# sourceMappingURL=/client/src.0e01b701.css.map */

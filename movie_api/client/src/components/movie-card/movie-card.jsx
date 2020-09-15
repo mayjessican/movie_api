@@ -10,8 +10,7 @@ import { Link } from "react-router-dom";
 export class MovieCard extends React.Component {
   render() {
     const { movie } = this.props;
-    // Should should not add movies-list class into the movie card, as it's a card, not a list
-
+ 
     return (
       <Card style={{ width: "16rem" }}>
         <Card.Img variant="top" src={movie.ImageURL} />
@@ -39,5 +38,4 @@ MovieCard.propTypes = {
     Description: PropTypes.string.isRequired,
     ImageURL: PropTypes.string.isRequired,
   }).isRequired,
-  //onClick: PropTypes.func.isRequired
 };
