@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { Navbar, Nav } from "react-bootstrap";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { setMovies, setUser } from "../../actions/actions";
-import MoviesList from '../movies-list/movies-list';
+import MoviesList from "../movies-list/movies-list";
 import { LoginView } from "../login-view/login-view";
 import { MovieView } from "../movie-view/movie-view";
 import { RegistrationView } from "../registration-view/registration-view";
@@ -25,7 +25,7 @@ export class MainView extends React.Component {
   componentDidMount() {
     let accessToken = localStorage.getItem("token");
     if (accessToken !== null) {
-      console.log('user', localStorage.getItem("user"));
+      console.log("user", localStorage.getItem("user"));
       this.props.setUser(localStorage.getItem("user"));
       this.getMovies(accessToken);
     }
@@ -42,7 +42,7 @@ export class MainView extends React.Component {
   onLoggedOut(authData) {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    this.props.setUser('');
+    this.props.setUser("");
     window.open("/client", "_self");
   }
 
@@ -57,7 +57,7 @@ export class MainView extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-    }
+  }
 
   register(registering) {
     this.setState({ register: registering });
@@ -116,9 +116,8 @@ export class MainView extends React.Component {
                   <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                 );
               }
-              
-              return <MoviesList movies={movies}/>;
 
+              return <MoviesList movies={movies} />;
             }}
           />
 
@@ -172,8 +171,7 @@ export class MainView extends React.Component {
     );
   }
 }
-let mapStateToProps = state => {
-   return { movies: state.movies,
-    user: state.user }
- }
- export default connect(mapStateToProps, { setMovies, setUser } )(MainView);
+let mapStateToProps = (state) => {
+  return { movies: state.movies, user: state.user };
+};
+export default connect(mapStateToProps, { setMovies, setUser })(MainView);
