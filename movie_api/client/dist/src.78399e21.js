@@ -51446,8 +51446,7 @@ var MovieCard = /*#__PURE__*/function (_React$Component) {
   _createClass(MovieCard, [{
     key: "render",
     value: function render() {
-      var movie = this.props.movie; // Should should not add movies-list class into the movie card, as it's a card, not a list
-
+      var movie = this.props.movie;
       return _react.default.createElement(_Card.default, {
         style: {
           width: "16rem"
@@ -51480,8 +51479,7 @@ MovieCard.propTypes = {
     Title: _propTypes.default.string.isRequired,
     Description: _propTypes.default.string.isRequired,
     ImageURL: _propTypes.default.string.isRequired
-  }).isRequired //onClick: PropTypes.func.isRequired
-
+  }).isRequired
 };
 },{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-bootstrap":"../node_modules/react-bootstrap/esm/index.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../../../../../../../../../../home/mayjessican/.nvm/versions/node/v12.18.2/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
@@ -51584,8 +51582,8 @@ var mapStateToProps = function mapStateToProps(state) {
 
 function MoviesList(props) {
   var movies = props.movies,
-      visibilityFilter = props.visibilityFilter;
-  console.log('visibility', visibilityFilter);
+      visibilityFilter = props.visibilityFilter; // console.log('visibility', visibilityFilter);
+
   var filteredMovies = movies;
 
   if (visibilityFilter !== '') {
@@ -51597,9 +51595,7 @@ function MoviesList(props) {
 
   if (!movies) return _react.default.createElement("div", {
     className: "main-view"
-  }); // that's what I meant yesterday, to move the VisibilityFilterInput outside of the movies-list div
-  // or you can do something like
-
+  });
   return _react.default.createElement("div", null, _react.default.createElement("div", {
     className: "filter-wrapper"
   }, _react.default.createElement(_visibilityFilterInput.default, {
@@ -52590,18 +52586,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(MainView);
 
   function MainView() {
-    var _this;
-
     _classCallCheck(this, MainView);
 
-    _this = _super.call(this); // Initial states are set here, if something is not here, it's also null/undefined
-
-    _this.state = {
-      movies: [],
-      selectedMovie: null,
-      user: null
-    };
-    return _this;
+    return _super.call(this);
   }
 
   _createClass(MainView, [{
@@ -52610,18 +52597,15 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       var accessToken = localStorage.getItem("token");
 
       if (accessToken !== null) {
-        this.setState({
-          user: localStorage.getItem("user")
-        });
+        console.log('user', localStorage.getItem("user"));
+        this.props.setUser(localStorage.getItem("user"));
         this.getMovies(accessToken);
       }
     }
   }, {
     key: "onLoggedIn",
     value: function onLoggedIn(authData) {
-      this.setState({
-        user: authData.user.Username
-      });
+      this.props.setUser(authData.user.Username);
       localStorage.setItem("token", authData.token);
       localStorage.setItem("user", authData.user.Username);
       this.getMovies(authData.token);
@@ -52631,30 +52615,24 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     value: function onLoggedOut(authData) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      this.setState({
-        user: null
-      });
-      window.open("/", "_self");
+      this.props.setUser('');
+      window.open("/client", "_self");
     }
   }, {
     key: "getMovies",
     value: function getMovies(token) {
-      var _this2 = this;
+      var _this = this;
 
       _axios.default.get("".concat(_helpers.default, "/movies"), {
         headers: {
           Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
-        _this2.props.setMovies(response.data);
+        _this.props.setMovies(response.data);
       }).catch(function (error) {
         console.log(error);
       });
-    } // Assign the result to the state
-    // this.setState({
-    //   movies: response.data,
-    // });
-
+    }
   }, {
     key: "register",
     value: function register(registering) {
@@ -52665,32 +52643,32 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
-      var register = this.state.register;
+      var register = this.props.register;
       var movies = this.props.movies;
-      var user = this.state.user;
+      var user = this.props.user;
 
       if (register) {
         return _react.default.createElement(_registrationView.RegistrationView, {
           onClick: function onClick() {
-            return _this3.alreadyMember();
+            return _this2.alreadyMember();
           },
           onSignedIn: function onSignedIn(user) {
-            return _this3.onSignedIn(user);
+            return _this2.onSignedIn(user);
           },
           onRegister: function onRegister(registering) {
-            return _this3.register(registering);
+            return _this2.register(registering);
           }
         });
       }
 
       if (!user) return _react.default.createElement(_loginView.LoginView, {
         onLoggedIn: function onLoggedIn(user) {
-          return _this3.onLoggedIn(user);
+          return _this2.onLoggedIn(user);
         },
         onRegister: function onRegister(registering) {
-          return _this3.register(registering);
+          return _this2.register(registering);
         }
       });
       if (!movies) return _react.default.createElement("div", {
@@ -52718,7 +52696,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         to: "/user/".concat(user)
       }, "Profile"), _react.default.createElement(_reactBootstrap.Nav.Link, {
         onClick: function onClick() {
-          return _this3.onLoggedOut();
+          return _this2.onLoggedOut();
         }
       }, "LogOut"))), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -52727,7 +52705,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           if (!user) {
             return _react.default.createElement(_loginView.LoginView, {
               onLoggedIn: function onLoggedIn(user) {
-                return _this3.onLoggedIn(user);
+                return _this2.onLoggedIn(user);
               }
             });
           }
@@ -52797,32 +52775,15 @@ exports.MainView = MainView;
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    movies: state.movies
+    movies: state.movies,
+    user: state.user
   };
 };
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, {
   setMovies: _actions.setMovies,
   setUser: _actions.setUser
-})(MainView); //  MainView.propTypes = {
-//   movies: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       Title: PropTypes.string,
-//       ImageUrl: PropTypes.string,
-//       Description: PropTypes.string,
-//       Genre: PropTypes.exact({
-//         _id: PropTypes.string,
-//         Name: PropTypes.string,
-//         Description: PropTypes.string
-//       }),
-//       Director: PropTypes.shape({
-//         Name: PropTypes.string
-//       })    
-//     })
-//   ),
-//   onToggleFavourite: PropTypes.func.isRequired
-// };
-
+})(MainView);
 
 exports.default = _default;
 },{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap":"../node_modules/react-bootstrap/esm/index.js","react-redux":"../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../../actions/actions":"actions/actions.js","../movies-list/movies-list":"components/movies-list/movies-list.jsx","../login-view/login-view":"components/login-view/login-view.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../registration-view/registration-view":"components/registration-view/registration-view.jsx","../director-view/director-view":"components/director-view/director-view.jsx","../genre-view/genre-view":"components/genre-view/genre-view.jsx","../profile-view/profile-view":"components/profile-view/profile-view.jsx","../update-profile/update-profile":"components/update-profile/update-profile.jsx","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","../../helpers":"helpers.js"}],"reducers/reducers.js":[function(require,module,exports) {
@@ -52863,8 +52824,8 @@ function movies() {
   }
 }
 
-function userProfile() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+function user() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
@@ -52874,18 +52835,12 @@ function userProfile() {
     default:
       return state;
   }
-} // function moviesApp(state = {}, action) {
-//   return {
-//     visibilityFilter: visibilityFilter(state.visibilityFilter, action),
-//     movies: movies(state.movies, action)
-//   }
-// }
-
+}
 
 var moviesApp = (0, _redux.combineReducers)({
   visibilityFilter: visibilityFilter,
   movies: movies,
-  userProfile: userProfile
+  user: user
 });
 var _default = moviesApp;
 exports.default = _default;
@@ -52992,7 +52947,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52939" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60765" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

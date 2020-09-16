@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 
 function MoviesList(props) {
   const { movies, visibilityFilter } = props;
-  console.log('visibility', visibilityFilter);
+  // console.log('visibility', visibilityFilter);
   let filteredMovies = movies;
 
   if (visibilityFilter !== '') {
@@ -21,7 +21,7 @@ function MoviesList(props) {
   }
 
   if (!movies) return <div className="main-view"/>;
-   return (
+  return (
     <div>
       <div className="filter-wrapper">
         <VisibilityFilterInput visibilityFilter={visibilityFilter} />

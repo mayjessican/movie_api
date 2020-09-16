@@ -1,13 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { Navbar, Nav } from "react-bootstrap";
-
 import { connect } from 'react-redux';
-
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-
 import { setMovies, setUser } from "../../actions/actions";
 import MoviesList from '../movies-list/movies-list';
 import { LoginView } from "../login-view/login-view";
@@ -24,29 +20,19 @@ import serverUrl from "../../helpers";
 export class MainView extends React.Component {
   constructor() {
     super();
-
-    // Initial states are set here, if something is not here, it's also null/undefined
-    this.state = {
-      movies: [],
-      selectedMovie: null,
-      user: null,
-    };
   }
 
   componentDidMount() {
     let accessToken = localStorage.getItem("token");
     if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem("user"),
-      });
+      console.log('user', localStorage.getItem("user"));
+      this.props.setUser(localStorage.getItem("user"));
       this.getMovies(accessToken);
     }
   }
 
   onLoggedIn(authData) {
-    this.setState({
-      user: authData.user.Username,
-    });
+    this.props.setUser(authData.user.Username);
 
     localStorage.setItem("token", authData.token);
     localStorage.setItem("user", authData.user.Username);
@@ -56,10 +42,8 @@ export class MainView extends React.Component {
   onLoggedOut(authData) {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    this.setState({
-      user: null,
-    });
-    window.open("/", "_self");
+    this.props.setUser('');
+    window.open("/client", "_self");
   }
 
   getMovies(token) {
@@ -80,9 +64,9 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { register } = this.state;
+    const { register } = this.props;
     let { movies } = this.props;
-    let { user } = this.state;
+    let { user } = this.props;
 
     if (register) {
       return (
@@ -188,9 +172,8 @@ export class MainView extends React.Component {
     );
   }
 }
-
 let mapStateToProps = state => {
-   return { movies: state.movies }
+   return { movies: state.movies,
+    user: state.user }
  }
-
  export default connect(mapStateToProps, { setMovies, setUser } )(MainView);
