@@ -49,7 +49,7 @@ export function UpdateProfile(props) {
       .then((response) => {
         const data = response.data;
         localStorage.setItem("user", data.Username);
-        window.open("/", "_self");
+        window.open("/client", "_self");
       })
       .catch((e) => {
         alert(" Your profile has been updated.");

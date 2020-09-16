@@ -20,6 +20,10 @@ import serverUrl from "../../helpers";
 export class MainView extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      register: null,
+    };
   }
 
   componentDidMount() {
@@ -64,7 +68,7 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { register } = this.props;
+    const { register } = this.state;
     let { movies } = this.props;
     let { user } = this.props;
 

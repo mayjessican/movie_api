@@ -27,7 +27,7 @@ export function RegistrationView(props) {
       })
       .then((response) => {
         const data = response.data;
-        window.open("/client", "_self");
+        window.open("/", "_self");
       })
       .catch((e) => {
       });

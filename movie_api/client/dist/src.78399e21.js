@@ -51361,8 +51361,6 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
 var _reactRedux = require("react-redux");
 
 var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
@@ -51386,7 +51384,7 @@ var _default = (0, _reactRedux.connect)(null, {
 })(VisibilityFilterInput);
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-redux":"../node_modules/react-redux/es/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","../../actions/actions":"actions/actions.js"}],"components/movie-card/movie-card.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","../../actions/actions":"actions/actions.js"}],"components/movie-card/movie-card.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -51959,7 +51957,7 @@ function RegistrationView(props) {
       Birthday: birthday
     }).then(function (response) {
       var data = response.data;
-      window.open("/client", "_self");
+      window.open("/", "_self");
     }).catch(function (e) {});
   };
 
@@ -52464,7 +52462,7 @@ function UpdateProfile(props) {
     }).then(function (response) {
       var data = response.data;
       localStorage.setItem("user", data.Username);
-      window.open("/", "_self");
+      window.open("/client", "_self");
     }).catch(function (e) {
       alert(" Your profile has been updated.");
     });
@@ -52586,9 +52584,15 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(MainView);
 
   function MainView() {
+    var _this;
+
     _classCallCheck(this, MainView);
 
-    return _super.call(this);
+    _this = _super.call(this);
+    _this.state = {
+      register: null
+    };
+    return _this;
   }
 
   _createClass(MainView, [{
@@ -52597,7 +52601,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       var accessToken = localStorage.getItem("token");
 
       if (accessToken !== null) {
-        console.log('user', localStorage.getItem("user"));
+        console.log("user", localStorage.getItem("user"));
         this.props.setUser(localStorage.getItem("user"));
         this.getMovies(accessToken);
       }
@@ -52615,20 +52619,20 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     value: function onLoggedOut(authData) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      this.props.setUser('');
+      this.props.setUser("");
       window.open("/client", "_self");
     }
   }, {
     key: "getMovies",
     value: function getMovies(token) {
-      var _this = this;
+      var _this2 = this;
 
       _axios.default.get("".concat(_helpers.default, "/movies"), {
         headers: {
           Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
-        _this.props.setMovies(response.data);
+        _this2.props.setMovies(response.data);
       }).catch(function (error) {
         console.log(error);
       });
@@ -52643,32 +52647,32 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
-      var register = this.props.register;
+      var register = this.state.register;
       var movies = this.props.movies;
       var user = this.props.user;
 
       if (register) {
         return _react.default.createElement(_registrationView.RegistrationView, {
           onClick: function onClick() {
-            return _this2.alreadyMember();
+            return _this3.alreadyMember();
           },
           onSignedIn: function onSignedIn(user) {
-            return _this2.onSignedIn(user);
+            return _this3.onSignedIn(user);
           },
           onRegister: function onRegister(registering) {
-            return _this2.register(registering);
+            return _this3.register(registering);
           }
         });
       }
 
       if (!user) return _react.default.createElement(_loginView.LoginView, {
         onLoggedIn: function onLoggedIn(user) {
-          return _this2.onLoggedIn(user);
+          return _this3.onLoggedIn(user);
         },
         onRegister: function onRegister(registering) {
-          return _this2.register(registering);
+          return _this3.register(registering);
         }
       });
       if (!movies) return _react.default.createElement("div", {
@@ -52696,7 +52700,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         to: "/user/".concat(user)
       }, "Profile"), _react.default.createElement(_reactBootstrap.Nav.Link, {
         onClick: function onClick() {
-          return _this2.onLoggedOut();
+          return _this3.onLoggedOut();
         }
       }, "LogOut"))), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -52705,7 +52709,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           if (!user) {
             return _react.default.createElement(_loginView.LoginView, {
               onLoggedIn: function onLoggedIn(user) {
-                return _this2.onLoggedIn(user);
+                return _this3.onLoggedIn(user);
               }
             });
           }
@@ -52947,7 +52951,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60765" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53825" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
