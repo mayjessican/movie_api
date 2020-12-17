@@ -11,6 +11,12 @@ export function LoginView(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  /**
+   * posting username and password to /login
+   * @function handleSubmit
+   * @param {event}
+   * @return {object} User information
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     /* Send a request to the server for authentication */
@@ -26,7 +32,6 @@ export function LoginView(props) {
       .catch((e) => {
         alert("no such user");
       });
-
   };
   return (
     <Container>
@@ -52,11 +57,6 @@ export function LoginView(props) {
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Submit
         </Button>{" "}
-        {/* <Link to={`/register`}>
-          <Button variant='dark link' type="submit" onClick={handleSubmit}>
-            Register Here
-          </Button>
-        </Link> */}
         <Button
           variant="dark link"
           type="submit"
@@ -68,7 +68,3 @@ export function LoginView(props) {
     </Container>
   );
 }
-
-// LoginView.propTypes = {
-//   onLoggedIn: PropTypes.func.isRequired
-// };

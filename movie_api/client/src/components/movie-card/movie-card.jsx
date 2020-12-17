@@ -2,15 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Row, Col, Nav, Navbar } from "react-bootstrap";
-import Container from "react-bootstrap/Container";
 
 import { Link } from "react-router-dom";
 
 export class MovieCard extends React.Component {
   render() {
     const { movie } = this.props;
- 
+
     return (
       <Card style={{ width: "16rem" }}>
         <Card.Img variant="top" src={movie.ImageURL} />

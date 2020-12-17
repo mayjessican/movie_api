@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
-import { MainView } from "../main-view/main-view";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
@@ -15,6 +14,11 @@ export class MovieView extends React.Component {
     this.state = {};
   }
 
+  /**
+   * Adds a movie to list of user´s favorites
+   * @function addToFavorites
+   * @axios
+   */
   addToFavorites(movie) {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");

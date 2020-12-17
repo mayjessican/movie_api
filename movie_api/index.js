@@ -41,7 +41,7 @@ mongoose.connect(
 );
 
 //Middleware
-app.use(express.static("public/documentation.html"));
+app.use(express.static("public"));
 app.use("/client", express.static(path.join(__dirname, "client", "dist")));
 app.use(morgan("common"));
 app.use(bodyParser.json());

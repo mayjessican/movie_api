@@ -15,6 +15,15 @@ export function RegistrationView(props) {
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
+  /**
+   * Register a new user
+   * @function handleSubmit
+   * @axios
+   * @param {string} username
+   * @param {string} password
+   * @param {string} email
+   * @param {date} birthday
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -27,10 +36,9 @@ export function RegistrationView(props) {
       })
       .then((response) => {
         const data = response.data;
-        window.open("/", "_self");
+        window.open("/client", "_self");
       })
-      .catch((e) => {
-      });
+      .catch((e) => {});
   };
 
   return (
@@ -87,7 +95,8 @@ export function RegistrationView(props) {
         <Button
           variant="dark link"
           type="submit"
-          onClick={() => props.onRegister(false)}>
+          onClick={() => props.onRegister(false)}
+        >
           Login
         </Button>
       </Form>
